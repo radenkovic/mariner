@@ -33,6 +33,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await UserModel.db.schema.dropTable('user_test');
+  await UserModel.db.destroy();
 });
 
 describe('Model Basics', () => {
