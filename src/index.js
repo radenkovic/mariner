@@ -1,4 +1,4 @@
-import Model from '@/Model';
-import Service from '@/Service';
+import Model from '@/model';
+import Service from '@/service';
 
 export { Model, Service };
