@@ -1,0 +1,53 @@
+{
+  "name": "node-toolbelt",
+  "version": "1.0.0",
+  "description": "Node Toolbelt",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon ./src --exec babel-node",
+    "build": "babel src -d dist",
+    "lint": "eslint lint ./src --fix",
+    "test": "jest --coverage --forceExit",
+    "flow": "flow",
+    "test:watch": "jest --watch --coverage",
+    "test:coverage": "jest --coverage"
+  },
+  "author": "Dan Radenkovic",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/radenkovic/toolbelt.git"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^8.1.0",
+    "knex": "^0.14.2",
+    "moment": "^2.22.2",
+    "mustache": "^2.3.0",
+    "nodemailer": "^4.4.1",
+    "pg": "^7.4.1",
+    "s3": "^4.4.0",
+    "validate.js": "^0.12.0",
+    "validator": "^9.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.3",
+    "babel-jest": "^22.0.6",
+    "babel-plugin-module-resolver": "^3.0.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^4.15.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-import-resolver-babel-module": "^4.0.0",
+    "eslint-plugin-flowtype": "^2.41.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.7.0",
+    "eslint-plugin-prettier": "^2.4.0",
+    "flow-bin": "^0.63.1",
+    "jest": "^22.0.6",
+    "prettier": "^1.10.2"
+  }
+}
