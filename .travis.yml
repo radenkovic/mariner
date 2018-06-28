@@ -22,9 +22,9 @@ jobs:
         - yarn run lint
         - yarn run flow
         - yarn run test
-    - stage: build
-      script:
-        - yarn run build
+    # - stage: build
+    #   script:
+    #     - yarn run build
 branches:
   only:
   - master
