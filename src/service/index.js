@@ -8,9 +8,9 @@ class Service {
     this.hooks = hooks || { before: {}, after: {} };
   }
 
-  service(method) {
-    if (!this[method]) throw new Error('Method not defined');
-    return this[method].bind(this);
+  service(method, params, ctx) {
+    if (!this[method]) throw new Error('Method Not Defined in Service');
+    return this.run(method, params, ctx);
   }
 
   async executeHook(target, method, params, ctx) {
@@ -36,14 +36,13 @@ class Service {
 
   async run(method, params, ctx) {
     // Whitelist
-    if (this.allowedParams.length && method === 'get')
+    if (this.allowedParams.length && method === 'find')
       params = Sanitize(params, this.allowedParams);
     // Validate
     if (this.validate[method]) {
       const validationResult = Validate(params, this.validate[method]);
       if (validationResult) throw validationResult;
     }
-    if (!this[method]) throw new Error('Method Not Defined in Service');
     await this.beforeHook('all', params, ctx);
     await this.beforeHook(method, params, ctx);
     if (this.Model) {
@@ -52,28 +51,27 @@ class Service {
       await this.afterHook(method, res, ctx);
       return res;
     }
-    await this.afterHook('all', {}, ctx);
-    await this.afterHook(method, {}, ctx);
+    await this.afterHook('all', params, ctx);
+    await this.afterHook(method, params, ctx);
+    return params;
   }
 
-  async get(params) {
+  async find(params) {
     return this.Model.find(params);
   }
 
-  async getOne(params) {
+  async findOne(params) {
     return this.Model.findOne(params);
   }
 
-  async post(data) {
+  async create(data) {
     return this.Model.create(data);
   }
 
-  async upsert(where, data) {
-    return this.Model.upsert(where, data);
-  }
-
-  async patch(data) {
-    return this.Model.update(data.id, data);
+  async update(data) {
+    const id = data[this.Model.idField];
+    delete data[this.Model.idField];
+    return this.Model.update(id, data);
   }
 
   async delete(id) {

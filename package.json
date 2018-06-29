@@ -9,8 +9,7 @@
     "lint": "eslint lint ./src --fix",
     "test": "jest --coverage",
     "flow": "flow",
-    "test:watch": "jest --watch --coverage",
-    "test:coverage": "jest --coverage"
+    "test:watch": "jest --watch"
   },
   "author": "Dan Radenkovic",
   "license": "MIT",
