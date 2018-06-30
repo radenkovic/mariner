@@ -22,6 +22,8 @@ jobs:
         - yarn run lint
         - yarn run flow
         - yarn run test
+    - stage: coverage
+      script: jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
     # - stage: build
     #   script:
     #     - yarn run build
