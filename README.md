@@ -30,14 +30,19 @@ Done, add docs.
 
 Done, add docs.
 
-## FileUpload
+## Events
 
-TBD
+Basic pubsub done. Add Docs.
 
 ## Mailer
+
+Done, needs some refactor.
+
+## FileUpload
 
 TBD
 
 ## ImageResizer
 
 TBD
+
