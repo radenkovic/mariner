@@ -31,9 +31,13 @@ type ModelConfig = {
 
 export default class Model implements BaseModel {
   table = '';
+
   db = {};
+
   idField = 'id';
+
   sanitize = null;
+
   constructor({ table, idField, sanitize, config }: ModelConfig) {
     // Preflight check
     if (!table)

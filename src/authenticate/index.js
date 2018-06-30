@@ -10,6 +10,7 @@ export default class Authenticate {
   static getTokenFromHeader(header) {
     return header.split('Bearer ')[1];
   }
+
   static createAuthorizationHeader(token) {
     return `Bearer ${token}`;
   }
