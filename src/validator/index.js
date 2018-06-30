@@ -5,10 +5,7 @@ validate.extend(validate.validators.datetime, {
   parse(value) {
     return +moment.utc(value);
   },
-  format(value) {
-    const date = moment(value);
-    return date.isValid();
-  }
+  format() {}
 });
 
 export const Sanitizer = (data, whitelist, passThru) => {

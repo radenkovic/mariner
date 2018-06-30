@@ -23,9 +23,7 @@ class Service {
   async service(method, params) {
     // Whitelist
     if (!this[method]) throw new MethodNotAllowedException(method);
-    if (this.sanitize[method]) {
-      params = this.Sanitizer(params, this.sanitize[method], passThru);
-    }
+    params = this.Sanitizer(params, this.sanitize[method], passThru);
     // Validate
     if (this.validate[method]) {
       const validationResult = this.Validator(params, this.validate[method]);
