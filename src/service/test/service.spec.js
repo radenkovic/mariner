@@ -1,20 +1,26 @@
 import Service from '../index';
+import {
+  MethodNotAllowedException,
+  UpdateWithoutIdException,
+  UpsertWithoutWhereException
+} from '../service.exceptions';
 
 const mockModel = {
   idField: 'id',
   find: data => ({ mode: 'find', ...data }),
   findOne: data => ({ mode: 'findOne', ...data }),
   create: data => ({ mode: 'create', ...data }),
-  upsert: (where, data) => ({ mode: 'upsert', where, ...data }),
-  delete: id => id,
-  update: (id, data) => ({ mode: 'update', id, ...data })
+  delete: id => (id < 1000 ? 1 : 0),
+  update: (id, data) => ({ mode: 'update', id, ...data }),
+  upsert: (where, data) => ({ mode: 'upsert', where, ...data })
 };
 
 const TestService = new Service({
+  name: 'TestService',
   model: mockModel
 });
 
-describe('Service methods', () => {
+describe('Service default methods', () => {
   test('find', async () => {
     expect(await TestService.service('find', { id: 1 })).toEqual({
       mode: 'find',
@@ -38,134 +44,59 @@ describe('Service methods', () => {
 
   test('update', async () => {
     expect(
-      await TestService.service('update', { id: 55, name: 'tester' })
-    ).toEqual({ mode: 'update', id: 55, name: 'tester' });
-  });
-
-  test('delete', async () => {
-    expect(await TestService.service('delete', 55)).toBe(55);
-  });
-});
-
-describe('Service Hooks', () => {
-  test('Before all', async () => {
-    TestService.hooks = {
-      before: {
-        all: [
-          params => {
-            params.test = true;
-          }
-        ]
-      },
-      after: {}
-    };
-    const res = await TestService.service('find', { id: 22 });
-    expect(res).toEqual({ mode: 'find', id: 22, test: true });
-  });
-
-  test('Before get', async () => {
-    TestService.hooks = {
-      before: {
-        find: [
-          params => {
-            params.test = true;
-          },
-          params => {
-            params.done = true;
-          }
-        ]
-      },
-      after: {}
-    };
-    const res = await TestService.service('find', { id: 22 });
-    expect(res).toEqual({ mode: 'find', id: 22, test: true, done: true });
-  });
-
-  test('After all', async () => {
-    TestService.hooks = {
-      after: {
-        all: [
-          params => {
-            params.test = true;
-          }
-        ]
-      },
-      before: {}
-    };
-    const res = await TestService.service('find', { id: 22 });
-    expect(res).toEqual({ mode: 'find', id: 22, test: true });
-  });
-
-  test('After find', async () => {
-    TestService.hooks = {
-      after: {
-        find: [
-          params => {
-            params.test = true;
-          },
-          params => {
-            params.done = true;
-          }
-        ]
-      },
-      before: {}
-    };
-    const res = await TestService.service('find', { id: 22 });
-    expect(res).toEqual({ mode: 'find', id: 22, test: true, done: true });
-  });
-
-  test('Stop propagation on error', async () => {
-    TestService.hooks = {
-      before: {
-        find: [
-          params => {
-            params.test = true;
-            const obj = { someError: true };
-            throw obj;
-          }
-        ]
-      },
-      after: {}
-    };
-    try {
-      await TestService.service('find', { id: 1 });
-    } catch (e) {
-      expect(e).toEqual({ someError: true });
-    }
-  });
-
-  test('Stop propagation on return false', async () => {
-    TestService.hooks = {
-      before: {
-        find: [
-          params => {
-            params.test = true;
-            return false;
-          },
-          params => {
-            params.secondModifier = true;
-          }
-        ]
-      },
-      after: {}
-    };
-    expect(await TestService.service('find', { id: 1 })).toEqual({
+      await TestService.service('update', { id: 1, name: 'tester' })
+    ).toEqual({
+      mode: 'update',
       id: 1,
-      mode: 'find',
-      test: true
+      name: 'tester'
     });
   });
 
-  test('Throw error on non-existing method', async () => {
-    TestService.hooks = { before: {}, after: {} };
+  test('update without id exception', async () => {
     try {
-      await TestService.service('methodNotExist', { id: 1 });
+      await TestService.service('update', { name: 'tester' });
     } catch (e) {
-      expect(e).toEqual(e);
+      expect(e instanceof UpdateWithoutIdException).toBe(true);
     }
   });
 
-  test('Without model', async () => {
+  test('upsert', async () => {
+    expect(
+      await TestService.service('upsert', {
+        id: 1,
+        name: 'tester',
+        $where: { id: 1 }
+      })
+    ).toEqual({
+      mode: 'upsert',
+      where: { id: 1 },
+      name: 'tester'
+    });
+  });
+
+  test('upsert without where exception', async () => {
+    try {
+      await TestService.service('upsert', { name: 'tester' });
+    } catch (e) {
+      expect(e instanceof UpsertWithoutWhereException).toBe(true);
+    }
+  });
+
+  test('delete', async () => {
+    expect(await TestService.service('delete', 55)).toBe(1);
+  });
+});
+
+describe('Service behavior and exceptions', () => {
+  test('Throw error on non-existing method', async () => {
+    try {
+      await TestService.service('methodNotExist', { id: 1 });
+    } catch (e) {
+      expect(e instanceof MethodNotAllowedException).toBe(true);
+    }
+  });
+
+  test('Service returns params without model', async () => {
     const ServiceTwo = new Service({});
     const res = await ServiceTwo.service('find', { id: 1 });
     expect(res).toEqual({ id: 1 });
@@ -173,14 +104,14 @@ describe('Service Hooks', () => {
 });
 
 describe('Service sanitize and validate', () => {
-  test('Sanitize, allowedParams', async () => {
-    TestService.allowedParams = ['id', 'name'];
+  test('Sanitize, sanitize', async () => {
+    TestService.sanitize.find = ['id', 'name'];
     const res = await TestService.service('find', { id: 1, edit: 'false' });
     expect(res).toEqual({ mode: 'find', id: 1 });
   });
 
   test('Validate failure', async () => {
-    TestService.allowedParams = [];
+    TestService.sanitize = {};
     TestService.validate = {
       find: {
         name: { presence: true }
@@ -194,7 +125,7 @@ describe('Service sanitize and validate', () => {
   });
 
   test('Validate success', async () => {
-    TestService.allowedParams = [];
+    TestService.sanitize = {};
     TestService.validate = {
       find: {
         name: { presence: true }
@@ -205,5 +136,40 @@ describe('Service sanitize and validate', () => {
     } catch (e) {
       expect(e).toEqual({ name: ["Name can't be blank"] });
     }
+  });
+
+  test('Custom validator', async () => {
+    const CustomValService = new Service({
+      name: 'CustomValService',
+      validator: () => undefined
+    });
+    const res = await CustomValService.service('find', { id: 1 });
+    expect(res).toEqual({ id: 1 });
+  });
+
+  test('Custom sanitizer', async () => {
+    const CustomValService = new Service({
+      name: 'CustomValService',
+      sanitizer: () => ({ sanitized: true })
+    });
+    CustomValService.sanitize = {
+      find: ['name']
+    };
+    const res = await CustomValService.service('find', { id: 1 });
+    expect(res).toEqual({ sanitized: true });
+  });
+
+  test('Custom service', async () => {
+    const CustomService = new Service({ name: 'CustomService' });
+    CustomService.customMethod = data => data;
+    const res = await CustomService.service('customMethod', { id: 1 });
+    expect(res).toEqual({ id: 1 });
+  });
+
+  test('No Configuration exception', () => {
+    expect(() => {
+      const Dummy = new Service();
+      return Dummy;
+    }).toThrow();
   });
 });

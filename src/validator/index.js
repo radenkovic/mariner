@@ -11,21 +11,22 @@ validate.extend(validate.validators.datetime, {
   }
 });
 
-export const Sanitize = (data, whitelist) => {
+export const Sanitizer = (data, whitelist, passThru) => {
   if (whitelist && whitelist.length) {
     const cleaned = {};
     whitelist.forEach(item => {
       cleaned[item] = true;
     });
     const result = validate.cleanAttributes(data, cleaned);
-    // Return special
-    result.$limit = data.$limit;
-    result.$skip = data.$skip;
-    result.$sort = data.$sort;
-    result.$or = data.$or;
+    // Pass Thru
+    if (passThru) {
+      passThru.forEach(item => {
+        result[item] = data[item];
+      });
+    }
     return result;
   }
   return data;
 };
 
-export const Validate = (data, constraints) => validate(data, constraints);
+export const Validator = (data, constraints) => validate(data, constraints);
