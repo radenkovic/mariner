@@ -5,30 +5,39 @@
 [![dependencies Status](https://david-dm.org/radenkovic/toolbelt/status.svg)](https://david-dm.org/radenkovic/toolbelt)
 [![devDependencies Status](https://david-dm.org/radenkovic/toolbelt/dev-status.svg)](https://david-dm.org/radenkovic/toolbelt?type=dev)
 
-# Model
+Toolbelt is a framework agnostic library that contains independent modules for 
+building web apps in Node.js.
+
+# Installation
+
+TBD: Add npm package.
+
+# Modules
+
+## Model
 
 Done, add docs.
 
-# Service
+## Service
 
 Done, add docs.
 
-# Authenticate
+## Authenticate
 
 Done, add docs.
 
-# Validator
+## Validator
 
 Done, add docs.
 
-# FileUpload
+## FileUpload
 
 TBD
 
-# Mailer
+## Mailer
 
 TBD
 
-# ImageResizer
+## ImageResizer
 
 TBD
