@@ -1,30 +1,46 @@
 import jwt from 'jsonwebtoken';
 
+import {
+  NoAuthorizationFunctionException,
+  NotAutorizedException,
+  AuthenticateNoConfigException
+} from './authenticate.exceptions';
+
 export default class Authenticate {
-  constructor({ secret, get }) {
-    this.secrect = secret;
-    this.get = get;
+  static getTokenFromHeader(header) {
+    return header.split('Bearer ')[1];
+  }
+  static createAuthorizationHeader(token) {
+    return `Bearer ${token}`;
   }
 
-  authorize(token) {
-    if (token) {
-      // verifies secret and checks exp
-      jwt.verify(token, this.secret, (err, decodedUser) => {
-        if (err) throw new Error('Could not decode Token');
-        // if everything is good, save to request for use in other routes
-        return decodedUser;
-      });
-    }
-    return null;
+  constructor(config) {
+    if (!config) throw new AuthenticateNoConfigException();
+    const { secret, authorizationFn } = config;
+    this.secret = secret;
+    this.get = authorizationFn;
+  }
+
+  sign(data) {
+    return jwt.sign(data, this.secret);
+  }
+
+  verify(token) {
+    const res = jwt.verify(token, this.secret);
+    return res;
   }
 
   async authenticate(payload) {
-    const user = await this.get(payload);
-    if (!user) throw new Error('Could not authenticate');
-    const token = jwt.sign(user, this.secret);
-    return {
-      user,
-      token
-    };
+    if (!this.get) throw new NoAuthorizationFunctionException(payload);
+    try {
+      const user = await this.get(payload);
+      const token = this.sign(payload);
+      return {
+        ...user,
+        access_token: token
+      };
+    } catch (e) {
+      throw new NotAutorizedException(payload);
+    }
   }
 }
