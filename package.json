@@ -18,13 +18,13 @@
     "url": "https://github.com/radenkovic/toolbelt.git"
   },
   "dependencies": {
+    "aws-sdk": "^2.266.1",
     "jsonwebtoken": "^8.1.0",
     "knex": "^0.14.2",
     "moment": "^2.22.2",
     "mustache": "^2.3.0",
     "nodemailer": "^4.4.1",
     "pg": "^7.4.1",
-    "s3": "^4.4.0",
     "validate.js": "^0.12.0",
     "validator": "^10.4.0"
   },
