@@ -14,6 +14,10 @@ TBD: Add npm package.
 
 # Modules
 
+Documentation is on gitbook: 
+
+[Documentation](https://radenkovic.gitbook.io/toolbelt/)
+
 ## Model
 
 Done, add docs.

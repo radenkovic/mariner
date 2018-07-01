@@ -26,4 +26,4 @@ export const Sanitizer = (data, whitelist, passThru) => {
   return data;
 };
 
-export const Validator = (data, constraints) => validate(data, constraints);
+export default (data, constraints) => validate(data, constraints);

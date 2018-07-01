@@ -1,4 +1,4 @@
-import { Validator, Sanitizer } from '../index';
+import Validator, { Sanitizer } from '../index';
 
 describe('Sanitizer', () => {
   test('Sanitize without whitelist returns data', () => {
