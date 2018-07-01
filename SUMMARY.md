@@ -1,6 +1,6 @@
 # Table of contents
 
-* [README](README.md)
-* [Modules](src/README.md)
-  * [Model Docs](src/model.md)
+* [Introduction](README.md)
+* [Modules](docs/modules/README.md)
+  * [Model Docs](docs/modules/model.md)
 
