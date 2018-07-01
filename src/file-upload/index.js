@@ -1,4 +1,3 @@
-// @flow
 import { S3 } from 'aws-sdk';
 
 type UploadConfig = {

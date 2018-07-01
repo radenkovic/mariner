@@ -40,7 +40,7 @@ Done, needs some refactor.
 
 ## FileUpload
 
-TBD
+Done, needs better exception handling.
 
 ## ImageResizer
 
