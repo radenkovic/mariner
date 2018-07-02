@@ -20,13 +20,13 @@ class Service {
     this.Model = model;
     this.Validator = validator || Validator;
     this.Sanitizer = sanitizer || Sanitizer;
-    this.eventEmitter = config.eventEmitter;
+    this.emitFn = config.emit;
   }
 
   emit(name, payload, params) {
     const eventName = `${this.name}:${name}`;
-    if (this.eventEmitter && payload) {
-      this.eventEmitter.emit(eventName, payload, params);
+    if (this.emitFn && payload) {
+      this.emitFn(eventName, payload, params);
     }
   }
 

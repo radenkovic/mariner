@@ -191,7 +191,7 @@ describe('Service eventEmitter', () => {
     const EventService = new Service({
       name: 'events',
       model: mockModel,
-      eventEmitter
+      emit: (name, data, params) => eventEmitter.emit(name, data, params)
     });
     eventEmitter.on('events:create', (data, params) => {
       expect(data.mode).toBe('create');
@@ -208,7 +208,7 @@ describe('Service eventEmitter', () => {
     const EventService = new Service({
       name: 'events',
       model: mockModel,
-      eventEmitter
+      emit: (name, data, params) => eventEmitter.emit(name, data, params)
     });
     eventEmitter.on('events:update', (data, params) => {
       expect(data.mode).toBe('update');
