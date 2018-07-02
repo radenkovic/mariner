@@ -16,11 +16,21 @@ export function sha512(password: string, salt: string) {
 }
 
 type SaltHash = {
-  hash: string,
+  hash: string | number,
   salt: string
 };
 
-export function verifyPassword({ enteredPassword, salt, password }): void {
+type VerifyPayload = {
+  enteredPassword: string,
+  salt: string,
+  password: string
+};
+
+export function verifyPassword({
+  enteredPassword,
+  salt,
+  password
+}: VerifyPayload): void {
   const hashedPassword = sha512(enteredPassword, salt);
   if (password === hashedPassword) return undefined;
   throw new Error('passwords to not match');
