@@ -1,8 +1,9 @@
 {
-  "name": "@toolbelt",
+  "name": "node-mariner",
   "version": "0.1.0",
   "description": "Node Toolbelt",
-  "main": "dist/index.js",
+  "main": "src/index.js",
+  "unpkg": "dist/index.js",
   "scripts": {
     "dev": "nodemon ./src --exec babel-node",
     "build": "babel src -d dist",
@@ -11,12 +12,23 @@
     "flow": "flow",
     "test:watch": "jest --watch"
   },
-  "author": "Dan Radenkovic",
+  "authors": [
+   "Dan Radenkovic <dan@radenkovic.org> (https://github.com/radenkovic)"
+ ],
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/radenkovic/toolbelt.git"
   },
+  "npmName": "node-mariner",
+  "npmFileMap": [
+    {
+      "basePath": "/dist/",
+      "files": [
+        "*.js"
+      ]
+    }
+  ],
   "dependencies": {
     "aws-sdk": "^2.266.1",
     "jsonwebtoken": "^8.1.0",
