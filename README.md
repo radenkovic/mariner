@@ -8,41 +8,11 @@ Toolbelt is a framework agnostic library that contains independent modules for b
 
 TBD: Add npm package.
 
-## Modules
+## Documentation
 
 Documentation is on gitbook:
 
 [Documentation](https://radenkovic.gitbook.io/toolbelt/)
 
-### Model
 
-Done, add docs.
-
-### Service
-
-Done, add docs.
-
-### Authenticate
-
-Done, add docs.
-
-### Validator
-
-Done, add docs.
-
-### Events
-
-Basic pubsub done. Add Docs.
-
-### Mailer
-
-Done, needs some refactor.
-
-### FileUpload
-
-Done, needs better exception handling.
-
-### ImageResizer
-
-TBD
 
