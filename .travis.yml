@@ -6,11 +6,6 @@ node_js:
 env:
   - NODE_ENV=ci
 
-services:
-  - postgresql
-before_script:
-  - psql -c 'create database toolbelt;' -U postgres
-
 cache:
   directories:
     - node_modules
@@ -18,15 +13,22 @@ cache:
 jobs:
   include:
     - stage: test
+      services:
+        - postgresql
+      before_script:
+        - psql -c 'create database toolbelt;' -U postgres
       script:
         - yarn run lint
         - yarn run flow
         - yarn run test
     - stage: coverage
+      services:
+        - postgresql
+      before_script:
+        - psql -c 'create database toolbelt;' -U postgres
       script: jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
     - stage: deploy
-      before_deploy:
-        - yarn run build
+      script: yarn build
       deploy:
         provider: npm
         email: $NPM_EMAIL
@@ -34,6 +36,7 @@ jobs:
         skip_cleanup: true
         on:
           branch: master
+  
 
 branches:
   only:

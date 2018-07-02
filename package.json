@@ -1,9 +1,8 @@
 {
   "name": "node-mariner",
-  "version": "0.1.0",
-  "description": "Node Toolbelt",
-  "main": "src/index.js",
-  "unpkg": "dist/index.js",
+  "version": "0.1.1",
+  "description": "Mariner",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon ./src --exec babel-node",
     "build": "babel src -d dist",
