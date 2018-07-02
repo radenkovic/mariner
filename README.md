@@ -4,6 +4,9 @@
 
 Mariner is a framework agnostic library that contains independent modules for building web apps in Node.js.
 
+![Node Mariner](https://i.imgur.com/KlTtKFY.png)
+
+
 ## Installation
 
 ```
