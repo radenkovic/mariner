@@ -1,3 +1,4 @@
+#e58593d1-8f78-49da-aeeb-d837ec8b6768
 language: node_js
 node_js:
   - "9"
@@ -5,11 +6,6 @@ node_js:
 env:
   - NODE_ENV=ci
 
-services:
-  - postgresql
-
-before_script:
-  - psql -c 'create database toolbelt;' -U postgres
 
 cache:
   directories:
@@ -17,6 +13,10 @@ cache:
 
 jobs:
   include:
+    services:
+      - postgresql
+    before_script:
+      - psql -c 'create database toolbelt;' -U postgres
     - stage: test
       script:
         - yarn run lint
@@ -27,6 +27,20 @@ jobs:
     # - stage: build
     #   script:
     #     - yarn run build
+
+
+before_deploy:
+  - yarn run build
+
+
+deploy:
+  provider: npm
+  email: NPM_EMAIL
+  api_key: NPM_TOKEN
+  skip_cleanup: true
+  on:
+    branch: npm
+
 branches:
   only:
   - master

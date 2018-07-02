@@ -1,6 +1,6 @@
 {
-  "name": "node-toolbelt",
-  "version": "1.0.0",
+  "name": "@toolbelt",
+  "version": "0.1.0",
   "description": "Node Toolbelt",
   "main": "src/index.js",
   "scripts": {
