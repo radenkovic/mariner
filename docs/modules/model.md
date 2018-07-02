@@ -153,16 +153,46 @@ for `upsert` method.
 
 Field level search:
 
-1. **$in:** `{ id: { $in: [1,2] } }` - finds entries that have id 1 or 2
-2. **$nin:** `{ id: { $nin: [1,2] } }` - finds entries that do not have id 1 or 2 
-3. **$lt:** `{ id: { $lt: 5 } }` - finds entries that have id less than 5
-4. **$lte:** `{ id: { $lte: 5 } }` - finds entries that have id less than or equal 5
-5. **$gt:** `{ id: { $gt: 5 } }` - finds entries that have id greater than 5
-6. **$gte:** `{ id: { $gte: 5 } }` - finds entries that have id greater than or equal 5
-7. **$between:** `{ id: { $between: [1, 5] } }` - finds entries that have ids between 1 and 5 (including 1 and 5)
-8. **$notBetween:** `{ id: { $notBetween: [1, 5] } }` - finds entries that do not have ids between 1 and 5 (excluding 1 and 5)
-9. **$null** `{ id: { $null: true }}` - finds entries where id is null (use `$null: false` to invert the results)
-10. **$or** `{ $or: { email: 'test@user.com', username: 'dan' } }` - finds entries where email is `test@user.com` or username is `dan`
+##### $in
+
+`{ id: { $in: [1,2] } }` - finds entries that have id 1 or 2
+
+##### $nin
+
+`{ id: { $nin: [1,2] } }` - finds entries that do not have id 1 or 2 
+
+##### $lt
+
+`{ id: { $lt: 5 } }` - finds entries that have id less than 5
+
+##### $lte
+
+`{ id: { $lte: 5 } }` - finds entries that have id less than or equal 5
+
+##### $gt
+
+`{ id: { $gt: 5 } }` - finds entries that have id greater than 5
+
+##### $gte
+
+`{ id: { $gte: 5 } }` - finds entries that have id greater than or equal 5
+
+##### $between
+
+`{ id: { $between: [1, 5] } }` - finds entries that have ids between 1 and 5 (including 1 and 5)
+
+##### $notBetween
+
+`{ id: { $notBetween: [1, 5] } }` - finds entries that do not have ids between 1 and 5 (excluding 1 and 5)
+
+##### $null
+
+`{ id: { $null: true }}` - finds entries where id is null (use `$null: false` to invert the results)
+
+##### $or
+
+`{ $or: { email: 'test@user.com', username: 'dan' } }` - finds entries where email is `test@user.com` or username is `dan`
+
 
 
 ### Pagination
