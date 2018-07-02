@@ -44,3 +44,4 @@ deploy:
 branches:
   only:
   - master
+  - npm
