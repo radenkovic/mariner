@@ -12,12 +12,22 @@ const passThru = ['$limit', '$skip', '$sort', '$where', '$or'];
 class Service {
   constructor(config) {
     if (!config) throw new NoConfigurationException();
+    if (!config.name) throw new NoConfigurationException();
     const { sanitize, validate, model, validator, sanitizer } = config;
+    this.name = config.name;
     this.sanitize = sanitize || {};
     this.validate = validate || {};
     this.Model = model;
     this.Validator = validator || Validator;
     this.Sanitizer = sanitizer || Sanitizer;
+    this.eventEmitter = config.eventEmitter;
+  }
+
+  emit(name, payload, params) {
+    const eventName = `${this.name}:${name}`;
+    if (this.eventEmitter && payload) {
+      this.eventEmitter.emit(eventName, payload, params);
+    }
   }
 
   async service(method, params) {
@@ -45,14 +55,18 @@ class Service {
   }
 
   async create(data) {
-    return this.Model.create(data);
+    const res = await this.Model.create(data);
+    this.emit('create', res, data);
+    return res;
   }
 
   async update(data) {
     const id = data[this.Model.idField];
     if (!id) throw new UpdateWithoutIdException(data);
     delete data[this.Model.idField];
-    return this.Model.update(id, data);
+    const res = await this.Model.update(id, data);
+    this.emit('update', res, data);
+    return res;
   }
 
   async upsert(data) {
@@ -60,11 +74,16 @@ class Service {
     if (!where) throw new UpsertWithoutWhereException(data);
     delete data[this.Model.idField];
     delete data.$where;
-    return this.Model.upsert(where, data);
+    const res = await this.Model.upsert(where, data);
+    if (res.mode === 'update') this.emit('update', res, data);
+    if (res.mode === 'create') this.emit('create', res, data);
+    return res;
   }
 
   async delete(id) {
-    return this.Model.delete(id);
+    const res = await this.Model.delete(id);
+    this.emit('delete', id, res);
+    return res;
   }
 }
 

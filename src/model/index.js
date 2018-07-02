@@ -133,8 +133,19 @@ export default class Model implements BaseModel {
   async upsert(where: Object | void, data: Object) {
     this.sanitizeParams(data);
     const find = await this.findOne(where);
-    if (!find) return this.create(data);
-    return this.update(find[this.idField], data);
+    if (!find) {
+      const res = await this.create(data);
+      return {
+        data: res,
+        mode: 'create'
+      };
+    }
+
+    const res = await this.update(find[this.idField], data);
+    return {
+      data: res,
+      mode: 'update'
+    };
   }
 
   delete(id: string | number) {

@@ -1,4 +1,6 @@
 import Service from '../index';
+import Events from '../../events/index';
+
 import {
   MethodNotAllowedException,
   UpdateWithoutIdException,
@@ -12,7 +14,10 @@ const mockModel = {
   create: data => ({ mode: 'create', ...data }),
   delete: id => (id < 1000 ? 1 : 0),
   update: (id, data) => ({ mode: 'update', id, ...data }),
-  upsert: (where, data) => ({ mode: 'upsert', where, ...data })
+  upsert: (where, data) => {
+    if (where.id === 1) return { where, ...data, mode: 'update' };
+    return { where, ...data, mode: 'create' };
+  }
 };
 
 const TestService = new Service({
@@ -68,7 +73,7 @@ describe('Service default methods', () => {
         $where: { id: 1 }
       })
     ).toEqual({
-      mode: 'upsert',
+      mode: 'update',
       where: { id: 1 },
       name: 'tester'
     });
@@ -97,7 +102,7 @@ describe('Service behavior and exceptions', () => {
   });
 
   test('Service returns params without model', async () => {
-    const ServiceTwo = new Service({});
+    const ServiceTwo = new Service({ name: 'ServiceTwo' });
     const res = await ServiceTwo.service('find', { id: 1 });
     expect(res).toEqual({ id: 1 });
   });
@@ -171,5 +176,48 @@ describe('Service sanitize and validate', () => {
       const Dummy = new Service();
       return Dummy;
     }).toThrow();
+  });
+  test('No Configuration name exception', () => {
+    expect(() => {
+      const Dummy = new Service({});
+      return Dummy;
+    }).toThrow();
+  });
+});
+
+describe('Service eventEmitter', () => {
+  test('Event Emitter upsert - create', async () => {
+    const eventEmitter = new Events();
+    const EventService = new Service({
+      name: 'events',
+      model: mockModel,
+      eventEmitter
+    });
+    eventEmitter.on('events:create', (data, params) => {
+      expect(data.mode).toBe('create');
+      expect(params.name).toBe('test_name');
+    });
+    EventService.service('upsert', {
+      id: 1,
+      name: 'test_name',
+      $where: { email: 'dan' }
+    });
+  });
+  test('Event Emitter upsert - update', async () => {
+    const eventEmitter = new Events();
+    const EventService = new Service({
+      name: 'events',
+      model: mockModel,
+      eventEmitter
+    });
+    eventEmitter.on('events:update', (data, params) => {
+      expect(data.mode).toBe('update');
+      expect(params.name).toBe('test_name');
+    });
+    EventService.service('upsert', {
+      id: 1,
+      name: 'test_name',
+      $where: { id: 1 }
+    });
   });
 });

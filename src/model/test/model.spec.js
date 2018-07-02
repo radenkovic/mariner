@@ -196,14 +196,16 @@ describe('Model upsert', () => {
       { email: 'dan@radenkovic.org' },
       { first_name: 'Dan' }
     );
-    expect(res.email).toBe('dan@radenkovic.org');
+    expect(res.data.email).toBe('dan@radenkovic.org');
+    expect(res.mode).toBe('update');
   });
   test('Upsert new entry', async () => {
     const res = await UserModel.upsert(
       { email: 'dan222@radenkovic.org' },
       { first_name: 'Dan5' }
     );
-    expect(res.first_name).toBe('Dan5');
+    expect(res.data.first_name).toBe('Dan5');
+    expect(res.mode).toBe('create');
   });
 });
 
