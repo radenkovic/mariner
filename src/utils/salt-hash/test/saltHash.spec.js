@@ -2,7 +2,7 @@ import saltHashPassword, {
   genRandomString,
   sha512,
   verifyPassword
-} from '../saltHash';
+} from '../index';
 
 test('Expect random string of proposed length', () => {
   const check = genRandomString(5);

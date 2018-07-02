@@ -12,12 +12,13 @@
     "test:watch": "jest --watch"
   },
   "authors": [
-   "Dan Radenkovic <dan@radenkovic.org> (https://github.com/radenkovic)"
- ],
+    "Dan Radenkovic <dan@radenkovic.org> (https://github.com/radenkovic)"
+  ],
+  "keywords": ["node", "orm", "library", "validator", "service", "model", "utils", "framework"],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/radenkovic/toolbelt.git"
+    "url": "https://github.com/radenkovic/node-mariner.git"
   },
   "npmName": "node-mariner",
   "npmFileMap": [
@@ -30,6 +31,7 @@
   ],
   "dependencies": {
     "aws-sdk": "^2.266.1",
+    "babel-polyfill": "^6.26.0",
     "jsonwebtoken": "^8.1.0",
     "knex": "^0.15.0",
     "moment": "^2.22.2",
