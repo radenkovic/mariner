@@ -39,7 +39,7 @@ const UserModel = new Model({
 * table`<string>` (required) - name of the table in the database
 * config`<object>` (required) - configuration for the database adapter (see [knex](https://knexjs.org/#Installation-client))
 * sanitize`<object>` - sanitize params before every model method, described [below](#sanitization)
-* idField`<string | number` - primary key of the table, defaults to `id`
+* idField`<string | number>` - primary key of the table, defaults to `id`
 
 ## Methods
 
@@ -69,7 +69,7 @@ Finds data that matches provided query and returns only the first result.
 Sample: 
 
 ```
-UserModel.find({ id: 1 })
+UserModel.findOne({ id: 1 })
 ```
 
 #### Model.create (data)
@@ -99,7 +99,7 @@ Upsert model will update existing data, or create a new record if there is no da
 Upsert requires `$where` param, which is basically the query for `find` function.
 If nothing matches `$where` query, new record is added.
 
-_CAUTION:_ If `$where` matches multiple records, only the first one will be updated.
+**CAUTION:** If `$where` matches multiple records, only the first one will be updated.
 
 Sample:
 
