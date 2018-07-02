@@ -24,22 +24,16 @@ jobs:
         - yarn run test
     - stage: coverage
       script: jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
-    # - stage: build
-    #   script:
-    #     - yarn run build
-
-
-before_deploy:
-  - yarn run build
-
-
-deploy:
-  provider: npm
-  email: NPM_EMAIL
-  api_key: NPM_TOKEN
-  skip_cleanup: true
-  on:
-    branch: master
+    - stage: deploy
+      before_deploy:
+        - yarn run build
+      deploy:
+        provider: npm
+        email: NPM_EMAIL
+        api_key: NPM_TOKEN
+        skip_cleanup: true
+        on:
+          branch: master
 
 branches:
   only:
