@@ -18,7 +18,7 @@ export const Sanitizer = (data, whitelist, passThru) => {
     // Pass Thru
     if (passThru) {
       passThru.forEach(item => {
-        result[item] = data[item];
+        if (data[item]) result[item] = data[item];
       });
     }
     return result;
