@@ -1,5 +1,6 @@
 // @flow
 import crypto from 'crypto';
+import { WrongPasswordException } from './salt-hash.exceptions';
 
 export function genRandomString(length: number): string {
   return crypto
@@ -33,7 +34,7 @@ export function verifyPassword({
 }: VerifyPayload): void {
   const hashedPassword = sha512(enteredPassword, salt);
   if (password === hashedPassword) return undefined;
-  throw new Error('passwords to not match');
+  throw new WrongPasswordException();
 }
 
 export default (password: string): SaltHash => {

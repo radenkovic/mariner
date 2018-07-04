@@ -1,12 +1,12 @@
 {
   "name": "node-mariner",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Mariner",
   "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon ./src --exec babel-node",
     "build": "babel src -d dist",
-    "lint": "eslint lint ./src --fix",
+    "lint": "eslint ./src --fix",
     "test": "jest --coverage",
     "flow": "flow",
     "test:watch": "jest --watch"
@@ -14,7 +14,16 @@
   "authors": [
     "Dan Radenkovic <dan@radenkovic.org> (https://github.com/radenkovic)"
   ],
-  "keywords": ["node", "orm", "library", "validator", "service", "model", "utils", "framework"],
+  "keywords": [
+    "node",
+    "orm",
+    "library",
+    "validator",
+    "service",
+    "model",
+    "utils",
+    "framework"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -29,6 +38,10 @@
       ]
     }
   ],
+  "bugs": {
+    "url": "https://github.com/radenkovic/node-mariner/issues",
+    "email": "dan@radenkovic.org"
+  },
   "dependencies": {
     "aws-sdk": "^2.266.1",
     "babel-polyfill": "^6.26.0",
@@ -50,7 +63,7 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
     "coveralls": "^3.0.2",
-    "eslint": "^4.15.0",
+    "eslint": "^5.0.1",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-import-resolver-babel-module": "^4.0.0",

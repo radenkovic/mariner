@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import {
   NoAuthorizationFunctionException,
   NotAutorizedException,
-  AuthenticateNoConfigException
+  NoConfigException
 } from './authenticate.exceptions';
 
 export default class Authenticate {
@@ -16,7 +16,7 @@ export default class Authenticate {
   }
 
   constructor(config) {
-    if (!config) throw new AuthenticateNoConfigException();
+    if (!config) throw new NoConfigException();
     const { secret, authorizationFn } = config;
     this.secret = secret;
     this.get = authorizationFn;

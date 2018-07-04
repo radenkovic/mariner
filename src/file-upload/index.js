@@ -1,4 +1,5 @@
 import { S3 } from 'aws-sdk';
+import { NoConfigException } from './file-upload.exceptions';
 
 type UploadConfig = {
   s3: {
@@ -25,22 +26,23 @@ export default class FileUpload {
   }
 
   checkConfig() {
-    if (!this.config) throw new Error('Configuration object not supplied');
+    if (!this.config)
+      throw new NoConfigException('Configuration object not supplied');
     if (!this.config.s3)
-      throw new Error('Configuration object needs s3 params');
+      throw new NoConfigException('Configuration expects property s3<object>');
     if (!this.config.bucket)
-      throw new Error('Configuration requires bucket property');
+      throw new NoConfigException('Configuration requires bucket<string>');
   }
 
   upload(data: UploadData) {
-    // Check extensions
-    function callback(err, response) {
+    const callback = (err, response) => {
       if (err && data.error) data.error(err);
       if (response && data.success) {
         const url = this.getUrl(data.key);
         data.success(url);
       }
-    }
+    };
+
     return this.s3.putObject(
       {
         Bucket: this.config.bucket,

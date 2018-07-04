@@ -1,4 +1,4 @@
-import Validator, { Sanitizer } from '@/utils/validator';
+import Validator, { Sanitizer } from '../utils/validator';
 
 import {
   NoConfigurationException,

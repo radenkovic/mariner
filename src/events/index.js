@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 export default class Events {
   constructor() {
     this.eventEmitter = new EventEmitter();
+    this.eventEmitter.setMaxListeners(0);
   }
 
   on(event, listener) {

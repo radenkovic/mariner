@@ -1,5 +1,6 @@
 // @flow
 import knex from 'knex';
+import { NoConfigException, InvalidParamException } from './model.exceptions';
 
 const findParams = [
   '$in',
@@ -41,9 +42,13 @@ export default class Model implements BaseModel {
   constructor({ table, idField, sanitize, config }: ModelConfig) {
     // Preflight check
     if (!table)
-      throw new Error('Cannot instantiate model, please supply table');
+      throw new NoConfigException(
+        'Cannot instantiate model, please supply table'
+      );
     if (!config)
-      throw new Error('Cannot instantiate model, please supply config object');
+      throw new NoConfigException(
+        'Cannot instantiate model, please supply config object'
+      );
 
     this.table = table;
     this.db = knex(config);
@@ -66,7 +71,7 @@ export default class Model implements BaseModel {
           const val = where[key][sk];
           // Reject fake params
           if (!findParams.includes(sk) && key !== '$or' && key !== '$sort')
-            throw new Error(`Param ${sk} is not supported by Model.find`);
+            throw new InvalidParamException(sk);
           else if (sk === '$in') q.whereIn(key, val);
           else if (sk === '$nin') q.whereNotIn(key, val);
           else if (sk === '$lt') q.where(key, '<', val);

@@ -17,7 +17,7 @@ You need to install adapter for your database manually.
 To create a model import the base model class and pass a configuration object:
 
 ```
-import Model from 'node-toolbelt'
+import { Model } from 'node-mariner'
 
 const UserModel = new Model({
   table: 'user_test',
@@ -27,7 +27,7 @@ const UserModel = new Model({
       host: 'localhost',
       user: 'postgres',
       password: '',
-      database: 'toolbelt'
+      database: 'node-mariner'
     }
   }
 })
@@ -104,7 +104,7 @@ If nothing matches `$where` query, new record is added.
 Sample:
 
 ```
-UserModel.upsert({ name: 'Dan', $where: { email: 'dan@toolbelt.org'} })
+UserModel.upsert({ name: 'Dan', $where: { email: 'dan@node-mariner.io'} })
 ```
 
 #### Model.delete (id)

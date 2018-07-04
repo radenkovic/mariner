@@ -8,7 +8,7 @@ const Uploader = new FileUpload({
     secretAccessKey: 'test',
     region: 'us-east-1'
   },
-  bucket: 'toolbelt'
+  bucket: 'mariner'
 });
 
 describe('Upload to S3', () => {

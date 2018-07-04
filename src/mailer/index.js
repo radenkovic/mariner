@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import nodemailer from 'nodemailer';
 import Mustache from 'mustache';
+import { NoConfigException, SendFailedException } from './mailer.exceptions';
 
 type MailerConfiguration = {
   transport: {
@@ -14,24 +15,25 @@ type MailerConfiguration = {
     }
   },
   templatesDir: string,
-  sender: string
+  from: string,
+  renderer?: Function
 };
 
 type EmailOptions = {
   to: string,
-  from: string,
+  from?: string,
   subject: string,
   html: string,
-  variables: Object,
-  renderer?: Function
+  variables: Object
 };
 
 export default class Mailer {
   constructor(config: MailerConfiguration) {
-    this.sender = config.sender;
+    if (!config) throw new NoConfigException();
+    this.from = config.from;
     this.templatesDir = config.templatesDir;
     this.transporter = nodemailer.createTransport(config.transport);
-    this.render = config.templateRenderer || Mustache.render;
+    this.render = config.renderer || Mustache.render;
   }
 
   parse(template: string, variables: Object): string {
@@ -47,9 +49,10 @@ export default class Mailer {
 
   send(options: EmailOptions) {
     try {
+      if (!options.from) options.from = this.from;
       return this.transporter.sendMail(options);
     } catch (e) {
-      throw new Error('send failed'); // TODO create exception
+      throw new SendFailedException('Email Send Failed', options);
     }
   }
 

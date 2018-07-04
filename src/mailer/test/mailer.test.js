@@ -11,7 +11,8 @@ const mockTransporter = {
 
 const MailService = new Mailer({
   templatesDir: path,
-  transport: {}
+  transport: {},
+  from: 'dan@radenkovic.org'
 });
 
 MailService.transporter = mockTransporter;
@@ -20,8 +21,25 @@ test('Template directory', () => {
   expect(MailService.templatesDir).toBe(path);
 });
 
-test('Send', () => {
-  expect(MailService.send({ id: 1 })).toEqual({ id: 1 });
+test('No configuration', () => {
+  expect(() => {
+    const M = new Mailer();
+    return M;
+  }).toThrow();
+});
+
+test('Send without sender', () => {
+  expect(MailService.send({ id: 1 })).toEqual({
+    id: 1,
+    from: 'dan@radenkovic.org'
+  });
+});
+
+test('Send with sender', () => {
+  expect(MailService.send({ id: 1, from: 'dan@radenkovic.org' })).toEqual({
+    id: 1,
+    from: 'dan@radenkovic.org'
+  });
 });
 
 test('Send from template', () => {
