@@ -1,18 +1,16 @@
 # Table of contents
 
-* [README](README.md)
-* [Introduction](docs/intro.md)
-* [Installation](docs/installation.md)
-* [Modules](docs/modules/README.md)
-  * [Model](docs/modules/model.md)
-  * [Service](docs/modules/service.md)
-  * [Authenticate](docs/modules/authenticate.md)
-  * [Events](docs/modules/events.md)
-  * [FileUpload](docs/modules/file-upload.md)
-  * [Mailer](docs/modules/mailer.md)
-* [Utilities](docs/utils/README.md)
-  * [Validator](docs/utils/validator.md)
-  * [SaltHash](docs/utils/salt-hash.md)
-
-
+* [Mariner](README.md)
+* [Introduction](introduction.md)
+* [Installation](installation.md)
+* [Modules](modules/README.md)
+  * [Model](modules/model.md)
+  * [Service](modules/service.md)
+  * [Authenticate](modules/authenticate.md)
+  * [Events](modules/events.md)
+  * [FileUpload](modules/fileupload.md)
+  * [Mailer](modules/mailer.md)
+* [Utilities](utilities/README.md)
+  * [Validator](utilities/validator.md)
+  * [SaltHash](utilities/salthash.md)
 
