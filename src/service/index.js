@@ -19,7 +19,8 @@ class Service {
     this.name = config.name;
     this.sanitize = sanitize || {};
     this.validate = validate || {};
-    this.Model = model;
+    this.Model = model; // TODO: deprecate
+    this.model = model;
     this.Validator = validator || Validator;
     this.Sanitizer = sanitizer || Sanitizer;
     this.emitFn = config.emit;
