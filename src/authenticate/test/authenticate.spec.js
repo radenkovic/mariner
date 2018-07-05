@@ -58,12 +58,3 @@ describe('Authorize', () => {
     }
   });
 });
-
-describe('Authenticate utils', () => {
-  test('createAuthorizationHeader', () => {
-    expect(Authenticate.createAuthorizationHeader('test')).toBe('Bearer test');
-  });
-  test('getTokenFromHeader', () => {
-    expect(Authenticate.getTokenFromHeader('Bearer test')).toBe('test');
-  });
-});

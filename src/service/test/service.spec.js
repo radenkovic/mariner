@@ -4,16 +4,23 @@ import Events from '../../events/index';
 import {
   MethodNotAllowedException,
   UpdateWithoutIdException,
-  UpsertWithoutWhereException
+  UpsertWithoutWhereException,
+  NotFoundException
 } from '../service.exceptions';
 
 const mockModel = {
   idField: 'id',
   find: data => ({ mode: 'find', ...data }),
-  findOne: data => ({ mode: 'findOne', ...data }),
+  findOne: data => {
+    if (data.throw) return null;
+    return { mode: 'findOne', ...data };
+  },
   create: data => ({ mode: 'create', ...data }),
   delete: id => (id < 1000 ? 1 : 0),
-  update: (id, data) => ({ mode: 'update', id, ...data }),
+  update: (id, data) => {
+    if (id === 100) return null;
+    return { mode: 'update', id, ...data };
+  },
   upsert: (where, data) => {
     if (where.id === 1) return { where, ...data, mode: 'update' };
     return { where, ...data, mode: 'create' };
@@ -106,10 +113,35 @@ describe('Service behavior and exceptions', () => {
     const res = await ServiceTwo.service('find', { id: 1 });
     expect(res).toEqual({ id: 1 });
   });
+
+  test('Service findOne not found Exception', async () => {
+    const ServiceTwo = new Service({ name: 'ServiceTwo', model: mockModel });
+    try {
+      await ServiceTwo.service('findOne', { id: 100, throw: true });
+    } catch (e) {
+      expect(e instanceof NotFoundException).toBe(true);
+    }
+  });
+  test('Service delete not found Exception', async () => {
+    const ServiceTwo = new Service({ name: 'ServiceTwo', model: mockModel });
+    try {
+      await ServiceTwo.service('delete', 1001);
+    } catch (e) {
+      expect(e instanceof NotFoundException).toBe(true);
+    }
+  });
+  test('Service update not found Exception', async () => {
+    const ServiceTwo = new Service({ name: 'ServiceTwo', model: mockModel });
+    try {
+      await ServiceTwo.service('update', { id: 100, name: 'test' });
+    } catch (e) {
+      expect(e instanceof NotFoundException).toBe(true);
+    }
+  });
 });
 
-describe('Service sanitize and validate', () => {
-  test('Sanitize, sanitize', async () => {
+describe('Service and validate', () => {
+  test('Sanitize params', async () => {
     TestService.sanitize.find = ['id', 'name'];
     const res = await TestService.service('find', { id: 1, edit: 'false' });
     expect(res).toEqual({ mode: 'find', id: 1 });
@@ -125,7 +157,9 @@ describe('Service sanitize and validate', () => {
     try {
       await TestService.service('find', { id: 1, edit: 'false' });
     } catch (e) {
-      expect(e).toEqual({ name: ["Name can't be blank"] });
+      expect(e).toHaveProperty('code', 'validation');
+      expect(e).toHaveProperty('data');
+      expect(e).toHaveProperty('message');
     }
   });
 

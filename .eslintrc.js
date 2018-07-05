@@ -19,7 +19,8 @@ module.exports = {
     'no-param-reassign': 0,
     'prettier/prettier': ['error', {
       'singleQuote': true
-    }]
+    }],
+    'import/prefer-default-export': 0
     // Additional, per-project rules...
   }
 }
