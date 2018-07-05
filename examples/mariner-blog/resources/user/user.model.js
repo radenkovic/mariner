@@ -1,5 +1,5 @@
-import config from '../knexfile';
-import { Model } from '../../../src';
+import config from '../../knexfile';
+import { Model } from '../../../../src';
 
 export default new Model({
   table: 'user',

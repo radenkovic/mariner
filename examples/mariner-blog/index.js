@@ -1,9 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import registerRoutes from './handlers/register-routes';
-import users from './routes/users';
-import posts from './routes/posts';
-import authenticate from './routes/authenticate';
+import users from './resources/user';
+import posts from './resources/post';
+import authenticate from './resources/auth';
 
 const app = express();
 app.use(bodyParser.json());

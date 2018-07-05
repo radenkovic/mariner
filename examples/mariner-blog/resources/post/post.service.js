@@ -1,5 +1,5 @@
-import { Service } from '../../../src';
-import model from '../models/post';
+import { Service } from '../../../../src';
+import model from './post.model';
 
 export default new Service({
   model,

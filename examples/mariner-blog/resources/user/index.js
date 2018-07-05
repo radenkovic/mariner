@@ -1,6 +1,6 @@
-import saltHash from '../../../src/utils/salt-hash';
-import authorize from '../middleware/authorize';
-import service from '../services/user';
+import saltHash from '../../../../src/utils/salt-hash';
+import authorize from '../auth/authorize.middleware';
+import service from './user.service';
 
 // Hooks
 const hashPassword = (req, res, next) => {
@@ -34,7 +34,7 @@ const isOwner = (req, res, next) => {
 
 export default {
   service,
-  route: 'user',
+  route: 'users',
   before: {
     create: [hashPassword],
     update: [authorize, isOwner, hashPassword],

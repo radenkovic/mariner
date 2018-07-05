@@ -1,6 +1,6 @@
-import { Authenticate } from '../../../src';
-import UserService from '../services/user';
-import { verifyPassword } from '../../../src/utils/salt-hash';
+import { Authenticate } from '../../../../src';
+import UserService from '../user/user.service';
+import { verifyPassword } from '../../../../src/utils/salt-hash';
 
 export const Auth = new Authenticate({
   secret: 'DEAD_SIMPLE_KEY',

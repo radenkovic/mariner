@@ -1,5 +1,5 @@
-import authorize from '../middleware/authorize';
-import service from '../services/post';
+import authorize from '../auth/authorize.middleware';
+import service from './post.service';
 
 // Hooks
 const isOwner = async (req, res, next) => {
@@ -21,6 +21,7 @@ export default {
   routes: ['posts', 'users/:user_id/posts'],
   before: {
     create: [authorize],
-    update: [authorize, isOwner]
+    update: [authorize, isOwner],
+    delete: [authorize, isOwner]
   }
 };

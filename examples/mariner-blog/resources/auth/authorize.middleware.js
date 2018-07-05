@@ -1,4 +1,4 @@
-import { Auth } from '../routes/authenticate';
+import { Auth } from './index';
 
 export default (req, res, next) => {
   const token = req.headers.authorization
