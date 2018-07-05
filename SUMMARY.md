@@ -14,6 +14,6 @@
   * [Validator](docs/validator.md)
   * [SaltHash](docs/salthash.md)
 * [Examples](docs/utils/README.md)
-  * [Validator](docs/utils/blog.md)
-  * [SaltHash](docs/utils/chat.md)
+  * [Blog](docs/utils/blog.md)
+  * [Realtime Chat](docs/utils/chat.md)
 
