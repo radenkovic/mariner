@@ -8,9 +8,9 @@ import authenticate from './routes/authenticate';
 const app = express();
 app.use(bodyParser.json());
 
+// Register Services (post and user)
 registerRoutes(app, users);
 registerRoutes(app, posts);
-registerRoutes(app, { ...posts, route: 'users/:user_id/posts/:id?' });
 
 app.post('/authenticate', authenticate);
 

@@ -1,28 +1,6 @@
 import saltHash from '../../../src/utils/salt-hash';
-import { Service } from '../../../src';
 import authorize from '../middleware/authorize';
-import model from '../models/user';
-
-const service = new Service({
-  model,
-  name: 'User',
-  sanitize: {
-    find: ['username', 'password', 'created_at', 'updated_at'],
-    create: ['username', 'name', 'email', 'password', 'salt'],
-    update: ['id', 'username', 'name', 'email', 'password', 'salt']
-  },
-  validate: {
-    create: {
-      username: { presence: true },
-      email: { presence: true, email: true },
-      password: { presence: true },
-      salt: { presence: true }
-    },
-    update: {
-      email: { email: true }
-    }
-  }
-});
+import service from '../services/user';
 
 // Hooks
 const hashPassword = (req, res, next) => {
@@ -56,7 +34,7 @@ const isOwner = (req, res, next) => {
 
 export default {
   service,
-  route: 'users',
+  route: 'user',
   before: {
     create: [hashPassword],
     update: [authorize, isOwner, hashPassword],
