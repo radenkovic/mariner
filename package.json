@@ -1,6 +1,6 @@
 {
-  "name": "node-mariner",
-  "version": "0.1.3",
+  "name": "mariner",
+  "version": "0.1.4",
   "description": "Mariner",
   "main": "dist/index.js",
   "scripts": {
@@ -27,7 +27,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/radenkovic/node-mariner.git"
+    "url": "https://github.com/radenkovic/mariner.git"
   },
   "npmName": "node-mariner",
   "npmFileMap": [
@@ -39,7 +39,7 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/radenkovic/node-mariner/issues",
+    "url": "https://github.com/radenkovic/mariner/issues",
     "email": "dan@radenkovic.org"
   },
   "dependencies": {
