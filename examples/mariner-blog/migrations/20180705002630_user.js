@@ -6,7 +6,10 @@ exports.up = knex =>
     table.string('email');
     table.string('password');
     table.string('salt');
-    table.timestamps();
+    table.timestamp('created_at').defaultTo(knex.fn.now());
+    table.timestamp('updated_at').defaultTo(knex.fn.now());
+    table.unique('username');
+    table.unique('email');
   });
 
 exports.down = knex => knex.schema.dropTable('user');

@@ -1,4 +1,5 @@
-import 'babel-polyfill';
+// import 'babel-polyfill';
+
 import Model from './model';
 import Service from './service';
 import Authenticate from './authenticate';

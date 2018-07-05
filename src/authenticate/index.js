@@ -7,14 +7,6 @@ import {
 } from './authenticate.exceptions';
 
 export default class Authenticate {
-  static getTokenFromHeader(header) {
-    return header.split('Bearer ')[1];
-  }
-
-  static createAuthorizationHeader(token) {
-    return `Bearer ${token}`;
-  }
-
   constructor(config) {
     if (!config) throw new NoConfigException();
     const { secret, authorizationFn } = config;
@@ -35,7 +27,7 @@ export default class Authenticate {
     if (!this.get) throw new NoAuthorizationFunctionException(payload);
     try {
       const user = await this.get(payload);
-      const token = this.sign(payload);
+      const token = this.sign(user);
       return {
         ...user,
         access_token: token

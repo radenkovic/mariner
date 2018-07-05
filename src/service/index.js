@@ -4,7 +4,9 @@ import {
   NoConfigurationException,
   MethodNotAllowedException,
   UpdateWithoutIdException,
-  UpsertWithoutWhereException
+  UpsertWithoutWhereException,
+  ValidationException,
+  NotFoundException
 } from './service.exceptions';
 
 const passThru = ['$limit', '$skip', '$sort', '$where', '$or'];
@@ -37,7 +39,7 @@ class Service {
     // Validate
     if (this.validate[method]) {
       const validationResult = this.Validator(params, this.validate[method]);
-      if (validationResult) throw validationResult;
+      if (validationResult) throw new ValidationException(validationResult);
     }
     if (this.Model) {
       return this[method](params);
@@ -51,7 +53,10 @@ class Service {
   }
 
   async findOne(params) {
-    return this.Model.findOne(params);
+    const res = await this.Model.findOne(params);
+    if (!res)
+      throw new NotFoundException(this.name, params[this.Model.idField]);
+    return res;
   }
 
   async create(data) {
@@ -65,6 +70,7 @@ class Service {
     if (!id) throw new UpdateWithoutIdException(data);
     delete data[this.Model.idField];
     const res = await this.Model.update(id, data);
+    if (!res) throw new NotFoundException(this.name, id);
     this.emit('update', res, data);
     return res;
   }
@@ -82,6 +88,7 @@ class Service {
 
   async delete(id) {
     const res = await this.Model.delete(id);
+    if (!res) throw new NotFoundException(this.name, id);
     this.emit('delete', id, res);
     return res;
   }
