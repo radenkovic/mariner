@@ -1,4 +1,0 @@
-# Authenticate
-
-TBD
-
