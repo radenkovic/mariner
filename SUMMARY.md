@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Mariner](README.md)
-* [Introduction](docs/intro.md)
+* [Getting Started](docs/intro.md)
 * [Installation](docs/installation.md)
 * [Modules](docs/modules/README.md)
   * [Model](docs/modules/model.md)
