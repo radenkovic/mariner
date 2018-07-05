@@ -1,10 +1,10 @@
 import authorize from '../auth/authorize.middleware';
-import service from './post.service';
+import PostService from './post.service';
 
 // Hooks
 const isOwner = async (req, res, next) => {
   try {
-    await service.service('findOne', {
+    await PostService.service('findOne', {
       id: req.params.id,
       user_id: req.user.id
     });
@@ -17,7 +17,7 @@ const isOwner = async (req, res, next) => {
 };
 
 export default {
-  service,
+  service: PostService,
   routes: ['posts', 'users/:user_id/posts'],
   before: {
     create: [authorize],

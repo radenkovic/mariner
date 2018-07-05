@@ -38,7 +38,7 @@ export default {
   before: {
     create: [hashPassword],
     update: [authorize, isOwner, hashPassword],
-    delete: [authorize]
+    delete: [authorize, isOwner]
   },
   after: {
     all: [removePassword]

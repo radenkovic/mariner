@@ -167,7 +167,7 @@ export default class Model implements BaseModel {
     if (!this.sanitize) return;
     Object.keys(this.sanitize).forEach(key => {
       // $FlowFixMe
-      data[key] = this.sanitize[key](data[key]);
+      if (data[key]) data[key] = this.sanitize[key](data[key]);
     });
   }
 }
