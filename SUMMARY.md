@@ -1,8 +1,8 @@
 # Table of contents
 
 * [Mariner](README.md)
-* [Introduction](introduction.md)
-* [Installation](installation.md)
+* [Introduction](docs/intro.md)
+* [Installation](docs/installation.md)
 * [Modules](modules/README.md)
   * [Model](modules/model.md)
   * [Service](modules/service.md)
