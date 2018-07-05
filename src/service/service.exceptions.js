@@ -22,3 +22,15 @@ export function NoConfigurationException() {
   this.code = 'no-configuration';
   this.message = 'Cannot create Service without config object';
 }
+
+export function ValidationException(data) {
+  this.code = 'validation';
+  this.data = data;
+  this.message = 'Validation of one or more fields failed';
+}
+
+export function NotFoundException(service, id) {
+  this.code = 'not-found';
+  this.data = { id };
+  this.message = `Record with id ${id} not found in ${service}`;
+}

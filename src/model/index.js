@@ -11,9 +11,7 @@ const findParams = [
   '$gte',
   '$between',
   '$notBetween',
-  '$null',
-  '$or',
-  '$sort'
+  '$null'
 ];
 interface BaseModel {
   find(): Promise<*>;
@@ -161,9 +159,15 @@ export default class Model implements BaseModel {
   }
 
   sanitizeParams(data: Object) {
+    // Remove undefined values
+    Object.keys(data).forEach(
+      key => (data[key] === undefined ? delete data[key] : '')
+    );
+
     if (!this.sanitize) return;
     Object.keys(this.sanitize).forEach(key => {
-      if (data[key] && this.sanitize) data[key] = this.sanitize[key](data[key]);
+      // $FlowFixMe
+      data[key] = this.sanitize[key](data[key]);
     });
   }
 }

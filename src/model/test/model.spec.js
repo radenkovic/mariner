@@ -217,6 +217,16 @@ describe('Model Sanitize', () => {
     const res = await UserModel.update(1, { username: ' DAN ' });
     expect(res.username).toBe('dan');
   });
+  test('Remove undefined values', async () => {
+    UserModel.sanitize = {
+      username: x => x.toLowerCase().trim()
+    };
+    const res = await UserModel.update(1, {
+      username: ' DAN ',
+      sample: undefined
+    });
+    expect(res.username).toBe('dan');
+  });
 });
 
 describe('Model Create', () => {
