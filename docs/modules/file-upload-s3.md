@@ -1,6 +1,7 @@
 # File Upload S3
 
-Module is configuration only and simplifies uploads to AWS S3 cloud storage. 
+Module is configuration only and simplifies uploads to [AWS S3](https://aws.amazon.com/s3/)
+ cloud storage. 
 It also provides methods for creating signed, expiring urls.
 
 ## Instantiating FileUpload Object
@@ -25,10 +26,13 @@ const Uploader new = FileUploadS3({
 All `FileUploadS3` configuration properties are mandatory unless stated differently.
 
 | key           | type          | description  |
-| ------------- |:-------------:| -----:|
+| ------------- |:-------------:| -----|
 | s3            | `object`      | Configuration obtained from AWS S3, keys are `accessKeyId`, 'secretAccessKey', `region` |
 | bucket        | `string`      |   S3 bucket name |
 | urlExpiration (optional) | `integer`, defaults to 120    |    Expiration time in seconds if you are using signed links |
+
+***Caution***: do not store s3 keys in the repository, use [dotenv](https://github.com/motdotla/dotenv)
+or environment variables.
 
 
 ## Uploading files
@@ -52,7 +56,7 @@ Uploader.upload({
 `
 
 | key           | type          | description                                   |
-| ------------- |:-------------:| ---------------------------------------------:|
+| ------------- |:-------------:| ---------------------------------------------|
 | file          | `Buffer`      | Configuration obtained from AWS S3, keys are `accessKeyId`, 'secretAccessKey', `region` |
 | key           | `string`      |   path (key), and filename with extension |
 | success (optional) | `function` |    Callback function on file upload success, first argument is file upload url |
