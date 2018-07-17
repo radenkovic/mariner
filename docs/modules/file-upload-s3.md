@@ -4,9 +4,9 @@ Module is configuration only and simplifies uploads to [AWS S3](https://aws.amaz
  cloud storage. 
 It also provides methods for creating signed, expiring urls.
 
-## Instantiating FileUpload Object
+## Creating FileUpload Object
 
-To instantiate the module and prepare it for use, just provide configuration
+To create the module (instantiate class) and prepare it for use, just provide configuration
 object as following:
 
 ```
