@@ -8,7 +8,7 @@ type MailerConfiguration = {
   transport: {
     host: string,
     port: number,
-    secure: string,
+    secure: boolean,
     auth: {
       user: string,
       pass: string

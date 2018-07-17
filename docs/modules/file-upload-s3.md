@@ -27,7 +27,7 @@ All `FileUploadS3` configuration properties are mandatory unless stated differen
 
 | key           | type          | description  |
 | ------------- |-------------| -----|
-| s3            | `object`      | Configuration obtained from AWS S3, keys are `accessKeyId`, 'secretAccessKey', `region` |
+| s3            | `object`      | Configuration obtained from AWS S3, keys are `accessKeyId`, `secretAccessKey`, `region` |
 | bucket        | `string`      |   S3 bucket name |
 | urlExpiration (optional) | `integer`, defaults to 120    |    Expiration time in seconds if you are using signed links |
 
