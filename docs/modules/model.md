@@ -1,17 +1,12 @@
 # Model
 
 Model is a minimal and high level abstraction layer for SQL databases. It 
-implements [knex](https://knexjs.org) library. Out of the box it supports:
+implements [knex](https://knexjs.org) library. 
 
-1. Postgresql 
-2. SQLite 
-2. MySQL
-3. MariaSQL
-4. Oracle
-5. MSSQL
 
 You need to install adapter for your database manually. For more info check
 [initializing the library](https://knexjs.org/#Installation-client).
+
 
 ## Creating a Model
 
@@ -35,6 +30,7 @@ const UserModel = new Model({
 
 ```
 
+
 ### Configuration Object
 
 All keys are mandatory unless stated differently.
@@ -47,22 +43,12 @@ All keys are mandatory unless stated differently.
 | idField (optional) | `string` | primary key of the table, defaults to `id`                                                    |
 
 
+
 ## Methods
-
-Model supports next methods:
-
-1. [find](#model-find-query)
-2. [findOne](#model-findone-query)
-3. [create](#model-create-query)
-4. [update](#model-update-query)
-5. [upsert](#model-upsert-query)
-6. [delete](#model-delete-query)
 
 #### Model.find (query)
 
 Finds data that matches provided query.
-
-Sample: 
 
 ```
 UserModel.find({ id: { $in: [1, 2, 3] }, email: 'test@user.com' })
@@ -71,8 +57,6 @@ UserModel.find({ id: { $in: [1, 2, 3] }, email: 'test@user.com' })
 #### Model.findOne (query)
 
 Finds data that matches provided query and returns only the first result.
-
-Sample: 
 
 ```
 UserModel.findOne({ id: 1 })
@@ -89,7 +73,6 @@ UserModel.create({ email: 'test@user.com', password: 'asdfasdf' })
 #### Model.update (data)
 
 Updates a record by primary key. Payload needs to include `id` (or proper idField).
-
 
 ```
 UserModel.update({ id: 5, name: 'newUser' })
