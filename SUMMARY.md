@@ -8,7 +8,7 @@
   * [Service](docs/modules/service.md)
   * [Authenticate](docs/modules/authenticate.md)
   * [Events](docs/modules/events.md)
-  * [FileUpload](docs/modules/fileupload.md)
+  * [FileUploadS3](docs/modules/file-upload-s3.md)
   * [Mailer](docs/modules/mailer.md)
 * [Utilities](docs/README.md)
   * [Validator](docs/validator.md)

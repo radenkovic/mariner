@@ -13,7 +13,7 @@ const Uploader = new FileUpload({
 
 describe('Upload to S3', () => {
   const file = fs.readFileSync(
-    `${process.cwd()}/src/file-upload/test/sample.txt`
+    `${process.cwd()}/src/file-upload-s3/test/sample.txt`
   );
 
   // Mock S3 Uploader

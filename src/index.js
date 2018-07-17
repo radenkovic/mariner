@@ -4,7 +4,7 @@ import Model from './model';
 import Service from './service';
 import Authenticate from './authenticate';
 import Events from './events';
-import FileUpload from './file-upload';
+import FileUploadS3 from './file-upload-s3';
 import Mailer from './mailer';
 import SaltHash from './utils/salt-hash';
 import Validator, { Sanitizer } from './utils/validator';
@@ -14,7 +14,7 @@ export {
   Service,
   Authenticate,
   Events,
-  FileUpload,
+  FileUploadS3,
   Mailer,
   SaltHash,
   Validator,
