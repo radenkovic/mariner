@@ -11,7 +11,7 @@ implements [knex](https://knexjs.org) library. Out of the box it supports:
 5. MSSQL
 
 You need to install adapter for your database manually. For more info check
-[Initializing the Library](https://knexjs.org/#Installation-client).
+[initializing the library](https://knexjs.org/#Installation-client).
 
 ## Creating a Model
 
@@ -41,7 +41,7 @@ All keys are mandatory unless stated differently.
 
 | key                | type     | description                                                                                   |
 | -------------------|----------|-----------------------------------------------------------------------------------------------|
-| $in                | `string` | name of the table in the database                                                             |
+| table              | `string` | name of the table in the database                                                             |
 | config             | `object` | configuration for the database adapter (see [knex](https://knexjs.org/#Installation-client))  |
 | sanitize (optional)| `object` | sanitize params before every model method, described [below](#sanitization)                   |
 | idField (optional) | `string` | primary key of the table, defaults to `id`                                                    |
@@ -82,8 +82,6 @@ UserModel.findOne({ id: 1 })
 
 Does a database insert with provided payload (data).
 
-Sample: 
-
 ```
 UserModel.create({ email: 'test@user.com', password: 'asdfasdf' })
 ```
@@ -92,8 +90,6 @@ UserModel.create({ email: 'test@user.com', password: 'asdfasdf' })
 
 Updates a record by primary key. Payload needs to include `id` (or proper idField).
 
-
-Sample: 
 
 ```
 UserModel.update({ id: 5, name: 'newUser' })
@@ -107,8 +103,6 @@ If nothing matches `$where` query, new record is added.
 
 **CAUTION:** If `$where` matches multiple records, only the first one will be updated.
 
-Sample:
-
 ```
 UserModel.upsert({ name: 'Dan', $where: { email: 'dan@node-mariner.io'} })
 ```
@@ -116,9 +110,6 @@ UserModel.upsert({ name: 'Dan', $where: { email: 'dan@node-mariner.io'} })
 #### Model.delete (id)
 
 Deletes a record from the database for provided `id` (idField).
-
-Sample:
-
 
 ```
 UserModel.delete(1)
@@ -174,8 +165,6 @@ UserModel.find({ $sort: { field: 'id', direction: 'asc' || 'desc' } } })
 
 You can define `sanitize` function in constructor, to sanitize data before
 executing the method (applies to all methods). Sanitize functions must be sync.
-
-Sample:
 
 ```
 const SafeModel({
