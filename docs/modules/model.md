@@ -10,7 +10,8 @@ implements [knex](https://knexjs.org) library. Out of the box it supports:
 4. Oracle
 5. MSSQL
 
-You need to install adapter for your database manually.
+You need to install adapter for your database manually. For more info check
+[Initializing the Library](https://knexjs.org/#Installation-client).
 
 ## Creating a Model
 
@@ -36,10 +37,15 @@ const UserModel = new Model({
 
 ### Configuration Object
 
-* table`<string>` (required) - name of the table in the database
-* config`<object>` (required) - configuration for the database adapter (see [knex](https://knexjs.org/#Installation-client))
-* sanitize`<object>` - sanitize params before every model method, described [below](#sanitization)
-* idField`<string | number>` - primary key of the table, defaults to `id`
+All keys are mandatory unless stated differently.
+
+| key                | type     | description                                                                                   |
+| -------------------|----------|-----------------------------------------------------------------------------------------------|
+| $in                | `string` | name of the table in the database                                                             |
+| config             | `object` | configuration for the database adapter (see [knex](https://knexjs.org/#Installation-client))  |
+| sanitize (optional)| `object` | sanitize params before every model method, described [below](#sanitization)                   |
+| idField (optional) | `string` | primary key of the table, defaults to `id`                                                    |
+
 
 ## Methods
 
@@ -118,31 +124,6 @@ Sample:
 UserModel.delete(1)
 ```
 
-## Sanitization 
-
-You can define `sanitize` function in constructor, to sanitize data before
-executing the method (applies to all methods). Sanitize functions must be sync.
-
-Sample:
-
-```
-const SafeModel({
-  table: 'user',
-  config, // omitted for clarity
-  sanitize: {
-    username: (username) => username.toLowerCase().trim()
-  }
-})
-
-// Find
-SafeModel.findOne({ username: '   JOHN ' }) // is queried for 'john'
-
-// Create
-SafeModel.crate({ username: 'TEST' }) // record will have username: 'test'
-
-```
-
-
 ## Data Filtering, Sorting and Pagination
 
 All params can be used for `find` or `findAll` method, and in `$where` 
@@ -153,45 +134,19 @@ for `upsert` method.
 
 Field level search:
 
-##### $in
 
-`{ id: { $in: [1,2] } }` - finds entries that have id 1 or 2
-
-##### $nin
-
-`{ id: { $nin: [1,2] } }` - finds entries that do not have id 1 or 2 
-
-##### $lt
-
-`{ id: { $lt: 5 } }` - finds entries that have id less than 5
-
-##### $lte
-
-`{ id: { $lte: 5 } }` - finds entries that have id less than or equal 5
-
-##### $gt
-
-`{ id: { $gt: 5 } }` - finds entries that have id greater than 5
-
-##### $gte
-
-`{ id: { $gte: 5 } }` - finds entries that have id greater than or equal 5
-
-##### $between
-
-`{ id: { $between: [1, 5] } }` - finds entries that have ids between 1 and 5 (including 1 and 5)
-
-##### $notBetween
-
-`{ id: { $notBetween: [1, 5] } }` - finds entries that do not have ids between 1 and 5 (excluding 1 and 5)
-
-##### $null
-
-`{ id: { $null: true }}` - finds entries where id is null (use `$null: false` to invert the results)
-
-##### $or
-
-`{ $or: { email: 'test@user.com', username: 'dan' } }` - finds entries where email is `test@user.com` or username is `dan`
+| key               | sample                                            | description                                 |
+| ------------------|---------------------------------------------------|---------------------------------------------|
+| $in               | `{ id: { $in: [1,2] } }`                          | finds entries that have id 1 or 2          |
+| $nin              | `{ id: { $nin: [1,2] } }`                         | finds entries that do not have id 1 or 2  |
+| $lt               | `{ id: { $lt: 5 } }`                              | finds entries that have id less than 5   |
+| $lte              | `{ id: { $lte: 5 } }`                             | finds entries that have id less than or equal 5   |
+| $gt               | `{ id: { $gt: 5 } }`                              | finds entries that have id greater than 5   |
+| $gte              | `{ id: { $gte: 5 } }`                             | finds entries that have id greater than or equal 5   |
+| $between          | `{ id: { $between: [1, 5] } }`                    | finds entries that have ids between 1 and 5 (including 1 and 5)   |
+| $notBetween       | `{ id: { $notBetween: [1, 5] } }`                 | finds entries that do not have ids between 1 and 5 (excluding 1 and 5)   |
+| $null             | `{ id: { $null: true }}`                          | finds entries where id is null (use `$null: false` to invert the results)   |
+| $or               | `{ $or: { email: 't@cd.com', username: 'dan' } }` | finds entries where email is `t@cd.com` or username is `dan`   |
 
 
 
@@ -215,4 +170,26 @@ UserModel.find({ $sort: { field: 'id', direction: 'asc' || 'desc' } } })
 ```
 
 
+## Sanitization 
 
+You can define `sanitize` function in constructor, to sanitize data before
+executing the method (applies to all methods). Sanitize functions must be sync.
+
+Sample:
+
+```
+const SafeModel({
+  table: 'user',
+  config, // omitted for clarity
+  sanitize: {
+    username: (username) => username.toLowerCase().trim()
+  }
+})
+
+// Find
+SafeModel.findOne({ username: '   JOHN ' }) // is queried for 'john'
+
+// Create
+SafeModel.create({ username: 'TEST' }) // record will have username: 'test'
+
+```
