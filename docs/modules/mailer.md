@@ -43,9 +43,9 @@ All keys are mandatory unless stated differently.
 
 **TIP**: If you are looking for free/cheap email plans, you can check [Mailjet](https://www.mailjet.com/), or [Amazon SES](https://aws.amazon.com/ses/).
 
-## Mailer send function
+## Mailer.send(`options`)
 
-Mailer send function expects only one argument: `options<object>`. All keys are mandatory unless stated differently.
+Mailer send function expects `options` object. All keys are mandatory unless stated differently.
 
 | key                | type     | description                                                                                   |
 | -------------------|----------|-----------------------------------------------------------------------------------------------|
@@ -59,7 +59,7 @@ Mailer send function expects only one argument: `options<object>`. All keys are 
 
 ## Sending your first email
 
-In previous step we prepared `Mail` for sending, so sending is straightforward:
+In the [previous step](#creating-and-configuring-mailer) we prepared `Mail` for sending, so sending is straightforward:
 
 ```
 const send = await Mail.send({
@@ -75,7 +75,7 @@ And that's it!
 
 ## Sending email with variables
 
-The most of the time, you want to include some dynamic data in email subject, or email body
+Most of the time, you want to include some dynamic data in email subject, or email body.
 Mailer module supports templating thanks to [mustache](https://mustache.github.io/):
 
 ```
@@ -98,7 +98,7 @@ This will result sending email with subject `Hello dan`, and body `<div>Hi Dan R
 Often, you want to have consistent header and footer in email, so you design a 
 base template, and you inject different messages in it. To send such email, you
 just need to pass `baseTemplate` string, which has to include `{{email_body}}` variable,
-which will be replaced with `html` of the email. Base template can use passed variables too.
+which will be replaced with parsed `html` of the email. Base template can use passed variables too.
 
 
 ```
