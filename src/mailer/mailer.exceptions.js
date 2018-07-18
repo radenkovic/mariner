@@ -7,4 +7,5 @@ export function SendFailedException(message, options) {
   this.code = 'send-failed';
   this.message = message;
   this.data = options;
+  this.error = options.error;
 }

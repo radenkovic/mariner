@@ -1,12 +1,14 @@
 import { S3 } from 'aws-sdk';
 import { NoConfigException } from './file-upload.exceptions';
 
+type S3Config = {
+  accessKeyId: string,
+  secretAccessKey: string,
+  region: string
+};
+
 type UploadConfig = {
-  s3: {
-    accessKeyId: string,
-    secretAccessKey: string,
-    region: string
-  },
+  s3: S3Config,
   bucket: string,
   urlExpiration?: number
 };
@@ -19,6 +21,10 @@ type UploadData = {
 };
 
 export default class FileUpload {
+  s3: Object;
+
+  config: UploadConfig;
+
   constructor(config: UploadConfig) {
     this.config = config;
     this.checkConfig();

@@ -1,20 +1,20 @@
-import fs from 'fs';
-import path from 'path';
+// @flow
 import nodemailer from 'nodemailer';
 import Mustache from 'mustache';
 import { NoConfigException, SendFailedException } from './mailer.exceptions';
 
+type NodeMailerTransport = {
+  host: string,
+  port: number,
+  secure: boolean,
+  auth: {
+    user: string,
+    pass: string
+  }
+};
+
 type MailerConfiguration = {
-  transport: {
-    host: string,
-    port: number,
-    secure: boolean,
-    auth: {
-      user: string,
-      pass: string
-    }
-  },
-  templatesDir: string,
+  transport: NodeMailerTransport,
   from: string,
   renderer?: Function
 };
@@ -24,42 +24,46 @@ type EmailOptions = {
   from?: string,
   subject: string,
   html: string,
-  variables: Object
+  variables: Object,
+  baseTemplate?: string
 };
 
 export default class Mailer {
+  from: string;
+
+  render: Function;
+
+  parse: Function;
+
+  transporter: Function;
+
   constructor(config: MailerConfiguration) {
     if (!config) throw new NoConfigException();
     this.from = config.from;
-    this.templatesDir = config.templatesDir;
     this.transporter = nodemailer.createTransport(config.transport);
     this.render = config.renderer || Mustache.render;
   }
 
-  parse(template: string, variables: Object): string {
-    return this.render(template, variables);
-  }
-
-  readTemplate(template: string) {
-    return fs.readFileSync(
-      path.join(`${`${this.templatesDir}/${template}`}.html`),
-      'UTF-8'
-    );
+  parse(template: string, variables: Object, baseTemplate: string): string {
+    const body = this.render(template, variables);
+    return baseTemplate
+      ? this.render(baseTemplate, { email_body: body })
+      : body;
   }
 
   send(options: EmailOptions) {
     try {
+      if (!options.variables) options.variables = {};
       if (!options.from) options.from = this.from;
+      options.subject = this.parse(options.subject, options.variables);
+      options.html = this.parse(
+        options.html,
+        options.variables,
+        options.baseTemplate
+      );
       return this.transporter.sendMail(options);
-    } catch (e) {
-      throw new SendFailedException('Email Send Failed', options);
+    } catch (error) {
+      throw new SendFailedException('Send email failed', { ...options, error });
     }
-  }
-
-  sendTemplate(template: string, options: EmailOptions) {
-    const subject = this.parse(options.subject, options.variables);
-    const rawTemplate = this.readTemplate(template);
-    const html = this.parse(rawTemplate, options.variables);
-    return this.send({ ...options, subject, html });
   }
 }
