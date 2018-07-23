@@ -1,7 +1,7 @@
 # Authenticate
 
 Authenticate module provides simple authentication mechanism utilizing [json web tokens](https://jwt.io/).
-While there are more robust solutions such as (Passport.js)[http://www.passportjs.org/],
+While there are more robust solutions such as [Passport.js](http://www.passportjs.org/),
 they are often too opinionated and bound to certain frameworks. Authenticate module provides clean
 API to implement JWT authentication with minimal level of abstraction.
 
@@ -68,7 +68,7 @@ try {
 }
 ```
 
-# Authenticate.sign method
+# Manually issuing a token (without `authorizationFn`)
 
 If you do not provide `authorizationFn`, you need to sign your payload manually,
 using `sign` method:
@@ -88,7 +88,7 @@ const manualAuthenticate = (username) => {
 
 # Real life sample using Mariner Service
 
-You can preview complete implementation in (mariner-blog)[https://docs.marinerjs.com/examples/blog] example. 
+You can preview complete implementation in [mariner-blog](https://docs.marinerjs.com/examples/blog) example. 
 
 
 
