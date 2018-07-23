@@ -1,6 +1,7 @@
 # Events
 
 Events module is implementation of node [events](https://nodejs.org/api/events.html#events_events).
+
 Module requires no configuration and usage is quite trivial:
 
 ```
@@ -33,6 +34,8 @@ console.log(PubSub.count()) // returns 0
 ```
 
 # Methods
+
+Events provide 4 methods, with familiar [publish-subscribe](https://addyosmani.com/blog/understanding-the-publishsubscribe-pattern-for-greater-javascript-scalability/) naming pattern:
 
 | method             | arguments     | description                                                                                   |
 | -------------------|----------|-----------------------------------------------------------------------------------------------|

@@ -47,7 +47,8 @@ We can now issue tokens as:
 
 ```
 try {
-  const payload = await Auth.authenticate('dan') // Auth.authenticate calls authorizationFn
+  // Auth.authenticate calls authorizationFn
+  const payload = await Auth.authenticate('dan')
   // payload will be { username: 'dan', access_token: '<SIGNED_JWT_TOKEN>'}
 } catch (e) {
   console.log(e.message)
