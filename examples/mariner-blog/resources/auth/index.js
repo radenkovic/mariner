@@ -2,12 +2,13 @@ import { Authenticate } from '../../../../src';
 import UserService from '../user/user.service';
 import { verifyPassword } from '../../../../src/utils/salt-hash';
 
+// Configuring the module
 export const Auth = new Authenticate({
   secret: 'DEAD_SIMPLE_KEY',
-  authorizationFn: ({ username, email }) =>
-    email
-      ? UserService.service('findOne', { email })
-      : UserService.service('findOne', { username })
+  authorizationFn: ({ login }) =>
+    UserService.service('findOne', {
+      $or: { username: login, email: login }
+    })
 });
 
 export default async (req, res, next) => {

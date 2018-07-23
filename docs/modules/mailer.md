@@ -39,7 +39,7 @@ All keys are mandatory unless stated differently.
 | transport.port     | `number` | SMTP PORT (eg. 25, 587, 465)                                                                  |
 | transport.secure   | `boolean`| whether to use encrypted transport                                                            |
 | transport.auth     | `object` | SMTP server credentials (`auth.user`, `auth.pass`)                                            |
-| renderer (optional)| `function` | optional function that has two arguments `(content, variables)`, described [below](#replacing-the-renderer)|
+| renderer (optional)| `function` | optional function that has two arguments `(content, variables)` described [below](#replacing-the-renderer)|
 
 **TIP**: If you are looking for free/cheap email plans, you can check [Mailjet](https://www.mailjet.com/), or [Amazon SES](https://aws.amazon.com/ses/).
 
