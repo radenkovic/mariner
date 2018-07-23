@@ -15,7 +15,9 @@ type UploadConfig = {
 
 type UploadData = {
   file: Buffer,
-  key: string
+  key: string,
+  success?: Function,
+  error?: Function
 };
 
 export default class FileUpload {
@@ -38,14 +40,16 @@ export default class FileUpload {
       throw new NoConfigException('Configuration requires bucket<string>');
   }
 
-  upload(data: UploadData) {
-    return this.s3
+  async upload(data: UploadData) {
+    await this.s3
       .putObject({
         Bucket: this.config.bucket,
         Key: data.key,
         Body: data.file
       })
       .promise();
+    const url = this.getUrl(data.key);
+    return url;
   }
 
   getUrl(key: string): string {
