@@ -1,7 +1,6 @@
 # File Upload S3
 
-Module is configuration only and simplifies uploads to [AWS S3](https://aws.amazon.com/s3/)
- cloud storage. 
+Module is configuration only and simplifies uploads to [AWS S3](https://aws.amazon.com/s3/) cloud storage. 
 It also provides methods for creating signed, expiring urls.
 
 ## Creating FileUpload Object
@@ -43,25 +42,24 @@ path (key) and optional callbacks for upload success and upload error.
 ```
 const sampleBuffer = new Buffer(512); // ... buffer obtained from upload, etc...
 
-Uploader.upload({
-  file: sampleBuffer,
-  key: 'some/path/sampleBuffer.txt', 
-  success: url => console.log(url),
-  error: err => console.log(err) 
-});
-
+try {
+  const url = await Uploader.upload({
+    file: sampleBuffer,
+    key: 'some/path/sampleBuffer.txt'
+  });
+  // console.log(url) // handle success
+} catch(e) {
+  // handle upload failure
+}
 ```
 
 `Uploader.upload` configuration object:
-`
+
 
 | key           | type          | description                                   |
 | ------------- |-------------| ---------------------------------------------|
 | file          | `Buffer`      | Configuration obtained from AWS S3, keys are `accessKeyId`, 'secretAccessKey', `region` |
 | key           | `string`      |   path (key), and filename with extension |
-| success (optional) | `function` |    Callback function on file upload success, first argument is file upload url |
-| error (optional)   | `function` |    Callback function on file upload error, first argument is error object |
-
 
 ## Uploading files to different buckets
 

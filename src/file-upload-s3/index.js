@@ -15,9 +15,7 @@ type UploadConfig = {
 
 type UploadData = {
   file: Buffer,
-  key: string,
-  success?: Function,
-  error?: Function
+  key: string
 };
 
 export default class FileUpload {
@@ -41,22 +39,13 @@ export default class FileUpload {
   }
 
   upload(data: UploadData) {
-    const callback = (err, response) => {
-      if (err && data.error) data.error(err);
-      if (response && data.success) {
-        const url = this.getUrl(data.key);
-        data.success(url);
-      }
-    };
-
-    return this.s3.putObject(
-      {
+    return this.s3
+      .putObject({
         Bucket: this.config.bucket,
         Key: data.key,
         Body: data.file
-      },
-      callback.bind(this)
-    );
+      })
+      .promise();
   }
 
   getUrl(key: string): string {
