@@ -11,16 +11,30 @@ const Uploader = new FileUpload({
   bucket: 'mariner'
 });
 
+// Mock S3
+Uploader.s3 = {
+  putObject(data) {
+    this.data = data;
+    return this;
+  },
+  promise() {
+    if (!this.data.Body) return Promise.reject(new Error('fail'));
+    return Promise.resolve();
+  },
+  getSignedUrl() {
+    return 'string';
+  }
+};
+
 describe('Upload to S3', () => {
   const file = fs.readFileSync(
     `${process.cwd()}/src/file-upload-s3/test/sample.txt`
   );
 
-  test.skip('Upload success', async () => {
+  test('Upload success', async () => {
     try {
       await Uploader.upload({ file, key: 'test/sample.txt' });
     } catch (e) {
-      console.log(e);
       expect(e).toBeUndefined();
     }
   });
