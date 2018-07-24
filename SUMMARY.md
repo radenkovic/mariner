@@ -12,7 +12,7 @@
   * [Mailer](docs/modules/mailer.md)
 * [Utilities](docs/utils/README.md)
   * [Validator](docs/utils/validator.md)
-  * [SaltHash](docs/utils/salthash.md)
+  * [SaltHash](docs/utils/salt-hash.md)
 * [Examples](docs/examples/README.md)
   * [Blog](docs/examples/blog.md)
   * [Realtime Chat](docs/examples/chat.md)
