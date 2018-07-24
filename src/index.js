@@ -6,7 +6,7 @@ import Authenticate from './authenticate';
 import Events from './events';
 import FileUploadS3 from './file-upload-s3';
 import Mailer from './mailer';
-import SaltHash from './utils/salt-hash';
+import SaltHash, { verifyPassword } from './utils/salt-hash';
 import Validator, { Sanitizer } from './utils/validator';
 
 export {
@@ -17,6 +17,7 @@ export {
   FileUploadS3,
   Mailer,
   SaltHash,
+  verifyPassword,
   Validator,
   Sanitizer
 };

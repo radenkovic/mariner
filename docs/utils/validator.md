@@ -1,3 +1,28 @@
 # Validator
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Validator is [validate.js](https://validatejs.org/) implementation, with few
+custom validators (date) and uses the same api as provided in validate.js documentation.
+It's also default validator of (Mariner Service)[https://docs.marinerjs.com/modules/service].
+
+```
+import { Validator } from 'node-mariner';
+
+const validations = {
+  email: { email: true }
+}
+
+const goodData = {
+  email: 'notemail.com'
+}
+
+const badData = {
+  email: 'dan@test.com'
+}
+
+const errors = Validator(goodData, validations);
+// errors is undefined
+
+const errors = Validator(badData, validations);
+// errors contains validation errors
+
+``
