@@ -25,4 +25,4 @@ const errors = Validator(goodData, validations);
 const errors = Validator(badData, validations);
 // errors contains validation errors
 
-``
+```

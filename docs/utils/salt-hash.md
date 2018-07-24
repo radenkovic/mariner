@@ -45,8 +45,6 @@ try {
 }
 ```
 
-## veryifyPassword function payload
-
 All keys are mandatory.
 
 | key                | type     | description                                                                                   |
