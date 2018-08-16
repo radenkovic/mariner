@@ -72,10 +72,9 @@ UserModel.create({ email: 'test@user.com', password: 'asdfasdf' })
 
 ### Model.update (data)
 
-Updates a record by primary key. Payload needs to include `id` (or proper idField).
-
+Updates a record by primary key. First argument is id (idField).
 ```
-UserModel.update({ id: 5, name: 'newUser' })
+UserModel.update(5, { name: 'newUser' })
 ```
 
 ### Model.upsert (data)

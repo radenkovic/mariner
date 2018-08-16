@@ -1,6 +1,6 @@
 {
   "name": "node-mariner",
-  "version": "0.1.41",
+  "version": "0.2.0",
   "description": "Mariner",
   "main": "dist/index.js",
   "scripts": {
@@ -45,6 +45,7 @@
   "dependencies": {
     "aws-sdk": "^2.266.1",
     "babel-polyfill": "^6.26.0",
+    "bcrypt": "^3.0.0",
     "jsonwebtoken": "^8.1.0",
     "knex": "^0.15.0",
     "moment": "^2.22.2",

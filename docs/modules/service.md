@@ -35,7 +35,6 @@ Only required properties are `model` and `name`.
 | -------------------|-----------|-----------------------------------------------------------------------------------------------|
 | name               | `string`  | name of the service |
 | model              | `object`  | mariner model, or custom model (class) that has methods `find`, `findOne`, `create`, `update`, `delete` |
-| model              | `object`  | mariner model, or custom model (class) that has methods `find`, `findOne`, `create`, `update`, `delete` |
 | sanitize           | `object`  | optional sanitization configuration, described below |
 | validate           | `object`  | optional validation configuration, described below |
 | validator          | `function`| optional validation function, to replace the default validator, described below |
