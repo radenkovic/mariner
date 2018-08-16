@@ -21,7 +21,7 @@ Increasing the number will make hash harder to exploit, but speed of creating ha
 ```
 import { SaltHash } from 'node-mariner';
 
-const password = SaltHash('userEnteredPassword', 9); // second argument is optional (salt length) defaults to 8
+const password = await SaltHash('userEnteredPassword', 9); // second argument is optional (salt length) defaults to 8
 // store the hash in database, eg.
 // await User.create({ password, name: 'Test User', email: 'sample@gmail.com' })
 ```

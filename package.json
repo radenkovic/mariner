@@ -1,11 +1,11 @@
 {
   "name": "node-mariner",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Mariner",
   "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon ./src --exec babel-node",
-    "build": "babel src -d dist",
+    "build": "babel src -d dist && cp -r src dist/src",
     "lint": "eslint ./src --fix",
     "test": "jest --coverage",
     "flow": "flow",
