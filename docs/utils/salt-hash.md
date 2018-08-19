@@ -38,7 +38,7 @@ import { verifyPassword } from 'node-mariner';
 
 try {
   const user = await User.findOne({ email: 'sample@gmail.com' })
-  verifyPassword({
+  await verifyPassword({
     enteredPassword: 'asdfasdf',
     password: user.password,
   });
