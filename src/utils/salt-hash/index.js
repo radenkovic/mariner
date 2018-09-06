@@ -13,5 +13,8 @@ export const verifyPassword = async ({ enteredPassword, password }) => {
   return valid;
 };
 
+export const SaltHashSync = (password: string, saltStrength: number = 9) =>
+  bcrypt.hashSync(password, saltStrength);
+
 export default async (password: string, saltStrength: number = 9) =>
   bcrypt.hash(password, saltStrength);

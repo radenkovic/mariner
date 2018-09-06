@@ -1,4 +1,4 @@
-import saltHashPassword, { verifyPassword } from '../index';
+import saltHashPassword, { verifyPassword, SaltHashSync } from '../index';
 
 test('hash password', async () => {
   const hash = await saltHashPassword('sampleP2121321312ass');
@@ -7,6 +7,16 @@ test('hash password', async () => {
 
 test('hash password with strength', async () => {
   const hash = await saltHashPassword('sampleP2121321312ass', 2);
+  expect(hash).toBeDefined();
+});
+
+test('hash password sync', () => {
+  const hash = SaltHashSync('sampleP2121321312ass');
+  expect(hash).toBeDefined();
+});
+
+test('hash password sync with strength', () => {
+  const hash = SaltHashSync('sampleP2121321312ass', 2);
   expect(hash).toBeDefined();
 });
 

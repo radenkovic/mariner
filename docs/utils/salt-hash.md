@@ -26,6 +26,14 @@ const password = await SaltHash('userEnteredPassword', 9); // second argument is
 // await User.create({ password, name: 'Test User', email: 'sample@gmail.com' })
 ```
 
+## SaltHashSync
+
+Sometimes you may want to create a hash synchronously. You can use `SaltHashSync` function:
+
+```
+import { SaltHashSync } from 'node-mariner';
+const hash = SaltHashSync('somepassword', 9); // second argument is optional
+```
 
 # Verifying password
 
@@ -54,5 +62,3 @@ All keys are mandatory.
 | -------------------|----------|-----------------------------------------------------------------------------------------------|
 | enteredPassword    | `string` | password we are verifying against                                                             |
 | password           | `string` | hashed password from database                                                                 |
-
-

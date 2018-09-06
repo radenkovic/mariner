@@ -70,14 +70,25 @@ export default class Model implements BaseModel {
           // Reject fake params
           if (!findParams.includes(sk) && key !== '$or' && key !== '$sort')
             throw new InvalidParamException(sk);
-          else if (sk === '$in') q.whereIn(key, val);
-          else if (sk === '$nin') q.whereNotIn(key, val);
-          else if (sk === '$lt') q.where(key, '<', val);
-          else if (sk === '$lte') q.where(key, '<=', val);
-          else if (sk === '$gt') q.where(key, '>', val);
-          else if (sk === '$gte') q.where(key, '>=', val);
-          else if (sk === '$between') q.whereBetween(key, val);
-          else if (sk === '$notBetween') q.whereNotBetween(key, val);
+          else if (sk === '$in')
+            q.whereIn(key, val.map(item => this.sanitizeParam(key, item)));
+          else if (sk === '$nin')
+            q.whereNotIn(key, val.map(item => this.sanitizeParam(key, item)));
+          else if (sk === '$lt')
+            q.where(key, '<', this.sanitizeParam(key, val));
+          else if (sk === '$lte')
+            q.where(key, '<=', this.sanitizeParam(key, val));
+          else if (sk === '$gt')
+            q.where(key, '>', this.sanitizeParam(key, val));
+          else if (sk === '$gte')
+            q.where(key, '>=', this.sanitizeParam(key, val));
+          else if (sk === '$between')
+            q.whereBetween(key, val.map(item => this.sanitizeParam(key, item)));
+          else if (sk === '$notBetween')
+            q.whereNotBetween(
+              key,
+              val.map(item => this.sanitizeParam(key, item))
+            );
           else if (sk === '$null' && val === true) q.whereNull(key);
           else if (sk === '$null' && val === false) q.whereNotNull(key);
           // if (sk === '$raw') q.whereRaw(val);
@@ -98,7 +109,9 @@ export default class Model implements BaseModel {
     q.limit(params.$limit || 10);
     if (params.$skip) q.offset(params.$skip);
     if (params.$or) {
-      Object.keys(params.$or).map(key => {
+      const { $or } = params;
+      this.sanitizeParams($or);
+      Object.keys($or).map(key => {
         q.orWhere(key, params.$or[key]);
         return null;
       });
@@ -156,6 +169,11 @@ export default class Model implements BaseModel {
       .table(this.table)
       .del()
       .where({ [this.idField]: id });
+  }
+
+  sanitizeParam(key: string, value: any): any {
+    if (this.sanitize && this.sanitize[key]) return this.sanitize[key](value);
+    return value;
   }
 
   sanitizeParams(data: Object) {

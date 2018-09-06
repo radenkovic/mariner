@@ -227,6 +227,26 @@ describe('Model Sanitize', () => {
     });
     expect(res.username).toBe('dan');
   });
+  test('Sanitize nested values', async () => {
+    UserModel.sanitize = {
+      username: x => x.toLowerCase().trim()
+    };
+    const res = await UserModel.find({
+      username: {
+        $in: ['  dan', 'bogdan']
+      }
+    });
+    expect(res[0]).toHaveProperty('username', 'dan');
+  });
+  test('Sanitize $or', async () => {
+    UserModel.sanitize = {
+      username: x => x.toLowerCase().trim()
+    };
+    const res = await UserModel.find({
+      $or: { username: ' DAN ', email: 'dan@testtest.com' }
+    });
+    expect(res[0]).toHaveProperty('username', 'dan');
+  });
 });
 
 describe('Model Create', () => {
