@@ -97,7 +97,7 @@ This will result sending email with subject `Hello dan`, and body `<div>Hi Dan R
 
 Often, you want to have consistent header and footer in email, so you design a 
 base template, and you inject different messages in it. To send such email, you
-just need to pass `baseTemplate` string, which has to include `{{email_body}}` variable,
+just need to pass `baseTemplate` string, which has to include `{{{email_body}}}` (notice that it's wrapped in three curly braces so html does not get escaped) variable,
 which will be replaced with parsed `html` of the email. Base template can use passed variables too.
 
 
@@ -105,7 +105,7 @@ which will be replaced with parsed `html` of the email. Base template can use pa
 const send = await Mail.send({
   to: 'dan@radenkovic.org',
   subject: 'I has template',
-  baseTemplate: '<html>from base template I say {{email_body}}</html>'
+  baseTemplate: '<html>from base template I say {{{email_body}}}</html>'
   html: '<div>Hi {{firstname}} {{lastname}}</div>',
   variables: {
     username: 'dan',

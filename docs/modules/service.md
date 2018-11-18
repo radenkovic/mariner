@@ -39,7 +39,7 @@ Only required properties are `model` and `name`.
 | validate           | `object`  | optional validation configuration, described below |
 | validator          | `function`| optional validation function, to replace the default validator, described below |
 | sanitizer          | `function`| optional sanitization function, to replace the default sanitizer, described below |
-| emitFn             | `function`| optional function that is run after every successful service method, described below |
+| emit             | `function`| optional function that is run after every successful service method, described below |
 
 
 ## Basic Service methods
@@ -178,7 +178,7 @@ After every successful method, emit function will be called, if provided.
 export default new Service({
   model,
   name: 'Post',
-  emitFn: (eventName, payload, params) => {
+  emit: (eventName, payload, params) => {
     // some logic here
   }
 });

@@ -2,7 +2,7 @@
   "name": "node-mariner",
   "version": "0.2.5",
   "description": "Mariner",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "scripts": {
     "dev": "nodemon ./src --exec babel-node",
     "build": "babel src -d dist && cp -r src dist/src",
