@@ -178,8 +178,8 @@ export default class Model implements BaseModel {
 
   sanitizeParams(data: Object) {
     // Remove undefined values
-    Object.keys(data).forEach(
-      key => (data[key] === undefined ? delete data[key] : '')
+    Object.keys(data).forEach(key =>
+      data[key] === undefined ? delete data[key] : ''
     );
 
     if (!this.sanitize) return;
