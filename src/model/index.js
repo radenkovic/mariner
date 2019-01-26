@@ -28,6 +28,17 @@ type ModelConfig = {
   config: Object
 };
 
+type WhereConfig = {
+  $limit?: Number,
+  $skip?: Number,
+  $sort?: Object,
+  $or?: Object,
+  [string]: {
+    $nin?: Array<string | number>,
+    $in?: Array<string | number>
+  }
+};
+
 export default class Model implements BaseModel {
   table = '';
 
@@ -54,7 +65,7 @@ export default class Model implements BaseModel {
     this.sanitize = sanitize;
   }
 
-  find(where: Object = {}) {
+  find(where: WhereConfig = {}) {
     const params = {
       $limit: where.$limit,
       $skip: where.$skip,
@@ -64,15 +75,20 @@ export default class Model implements BaseModel {
     const q = this.db.table(this.table);
 
     Object.keys(where).map(key => {
+      // Where example { username: { '$in': [ '  dan', 'bogdan' ] } }
       if (typeof where[key] === 'object' && where[key] !== null) {
         Object.keys(where[key]).map(sk => {
+          // sk example "username", val { '$in': [ '  dan', 'bogdan' ] }
+          // $FlowFixMe
           const val = where[key][sk];
           // Reject fake params
           if (!findParams.includes(sk) && key !== '$or' && key !== '$sort')
             throw new InvalidParamException(sk);
           else if (sk === '$in')
+            // $FlowFixMe
             q.whereIn(key, val.map(item => this.sanitizeParam(key, item)));
           else if (sk === '$nin')
+            // $FlowFixMe
             q.whereNotIn(key, val.map(item => this.sanitizeParam(key, item)));
           else if (sk === '$lt')
             q.where(key, '<', this.sanitizeParam(key, val));
@@ -83,10 +99,12 @@ export default class Model implements BaseModel {
           else if (sk === '$gte')
             q.where(key, '>=', this.sanitizeParam(key, val));
           else if (sk === '$between')
+            // $FlowFixMe
             q.whereBetween(key, val.map(item => this.sanitizeParam(key, item)));
           else if (sk === '$notBetween')
             q.whereNotBetween(
               key,
+              // $FlowFixMe
               val.map(item => this.sanitizeParam(key, item))
             );
           else if (sk === '$null' && val === true) q.whereNull(key);
@@ -112,6 +130,7 @@ export default class Model implements BaseModel {
       const { $or } = params;
       this.sanitizeParams($or);
       Object.keys($or).map(key => {
+        // $FlowFixMe
         q.orWhere(key, params.$or[key]);
         return null;
       });

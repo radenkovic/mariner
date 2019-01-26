@@ -2,11 +2,7 @@ module.exports = {
   extends: ['airbnb-base',  'plugin:jest/recommended','prettier'],
   parser: 'babel-eslint',
   plugins: ['import', 'prettier', 'flowtype', 'jest'],
-  settings: {
-    "import/resolver": {
-      "babel-module": {}
-    }
-  },
+
   globals: {
     "jest/globals": true
   },

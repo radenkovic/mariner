@@ -33,8 +33,6 @@ export default class Mailer {
 
   render: Function;
 
-  parse: Function;
-
   transporter: Function;
 
   constructor(config: MailerConfiguration) {
@@ -44,7 +42,7 @@ export default class Mailer {
     this.render = config.renderer || Mustache.render;
   }
 
-  parse(template: string, variables: Object, baseTemplate: string): string {
+  parse(template: string, variables: Object, baseTemplate?: string): string {
     const body = this.render(template, variables);
     return baseTemplate
       ? this.render(baseTemplate, { email_body: body })

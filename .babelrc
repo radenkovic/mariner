@@ -1,10 +1,8 @@
 {
-  "presets": ["env", "stage-0", "flow"],
-  "plugins": [
-    ["module-resolver", {
-      "alias": {
-        "@": "./src"
-      }
-    }]
-  ]
+  "presets": [
+    ["@babel/preset-env", { "targets": { "node": "current" } }],
+    "@babel/preset-flow"
+  ],
+  "plugins": ["@babel/plugin-proposal-class-properties"]
+
 }

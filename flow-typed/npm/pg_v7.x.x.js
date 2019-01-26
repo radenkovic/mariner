@@ -1,5 +1,5 @@
-// flow-typed signature: bce25cf9995831e2ac1ebae0b4169cfc
-// flow-typed version: a175a2307f/pg_v7.x.x/flow_>=v0.28.x
+// flow-typed signature: 19ef65e9d513ad03294860e751b933fc
+// flow-typed version: 2493e23acc/pg_v7.x.x/flow_>=v0.28.x
 
 declare module pg {
   // Note: Currently There are some issues in Function overloading.
@@ -89,6 +89,7 @@ declare module pg {
     release(error?: mixed): void,
 
     query:
+    ( <T: QuerySubmittableConfig>(query: T, callback?: QueryCallback) => T ) &
     ( (query: QueryConfig|string, callback?: QueryCallback) => Query ) &
     ( (text: string, values: Array<any>, callback?: QueryCallback) => Query ),
 
@@ -198,6 +199,9 @@ declare module pg {
     text: string,
     values?: any[],
   };
+  declare type QuerySubmittableConfig = QueryConfig & {
+    submit: (connection: mixed) => void,
+  };
 
   declare type QueryCallback = (err: PG_ERROR|null, result: ResultSet|void) => void;
   declare type ClientConnectCallback = (err: PG_ERROR|null, client: Client|void) => void;
@@ -250,6 +254,7 @@ declare module pg {
     escapeIdentifier(str: string): string;
 
     query:
+    ( <T: QuerySubmittableConfig>(query: T, callback?: QueryCallback) => T ) &
     ( (query: QueryConfig|string, callback?: QueryCallback) => Query ) &
     ( (text: string, values: Array<any>, callback?: QueryCallback) => Query );
 
