@@ -1,1 +1,0 @@
-# Mariner Blog Example

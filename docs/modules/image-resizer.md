@@ -15,7 +15,13 @@ try {
     image: file,
     width: 500,
     height: 400,
-    quality: 95 // optional (defaults to 90)
+    quality: 95, // optional (defaults to 90),
+    sharpen: { // optional sharpening applied to image
+      sigma: 1.0,
+      flat: 1.0,
+      jagged: 1.0,
+    },
+    fit: 'inside', // 'inside' | 'outside' | 'cover' (crop)
   })
   // save the resizedBuffer, or upload it
 } catch(e) {

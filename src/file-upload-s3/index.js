@@ -1,3 +1,4 @@
+// @flow
 import { S3 } from 'aws-sdk';
 import { NoConfigException } from './file-upload.exceptions';
 

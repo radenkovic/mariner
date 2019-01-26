@@ -10,7 +10,12 @@ test('it should resize image', async () => {
     const resized = await ImageResizer.resizeImage({
       image,
       width: 320,
-      height: 240
+      height: 240,
+      sharpen: {
+        sigma: 1,
+        jagged: 1,
+        flat: 1
+      }
     });
     expect(resized).toBeDefined();
   } catch (e) {

@@ -17,9 +17,9 @@ jobs:
       before_script:
         - psql -c 'create database "node-mariner";' -U postgres
       script:
-        - yarn run lint
-        - yarn run flow
-        - yarn run test
+        - yarn lint
+        - yarn flow
+        - yarn test
     - stage: coverage
       services:
         - postgresql

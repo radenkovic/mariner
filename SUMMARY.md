@@ -2,7 +2,6 @@
 
 * [Mariner](README.md)
 * [Getting Started](docs/intro.md)
-* [Installation](docs/installation.md)
 * [Modules](docs/modules/README.md)
   * [Model](docs/modules/model.md)
   * [Service](docs/modules/service.md)
@@ -14,7 +13,4 @@
 * [Utilities](docs/utils/README.md)
   * [Validator](docs/utils/validator.md)
   * [SaltHash](docs/utils/salt-hash.md)
-* [Examples](docs/examples/README.md)
-  * [Blog](docs/examples/blog.md)
-  * [Realtime Chat](docs/examples/chat.md)
 

@@ -1,24 +1,13 @@
-import { EventEmitter } from 'events';
+// @flow
+import EventEmitter from 'events';
 
-export default class Events {
+export default class Events extends EventEmitter {
   constructor() {
-    this.eventEmitter = new EventEmitter();
-    this.eventEmitter.setMaxListeners(0);
+    super();
+    this.setMaxListeners(0);
   }
 
-  on(event, listener) {
-    this.eventEmitter.addListener(event, listener);
-  }
-
-  off(event, listener) {
-    this.eventEmitter.removeListener(event, listener);
-  }
-
-  emit(event, ...args) {
-    this.eventEmitter.emit(event, ...args);
-  }
-
-  count(event) {
-    return EventEmitter.listenerCount(this.eventEmitter, event);
+  count(event: string) {
+    return this.listenerCount(event);
   }
 }

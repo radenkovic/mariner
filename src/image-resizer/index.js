@@ -1,12 +1,18 @@
+// @flow
 import sharp from 'sharp';
 import exifReader from 'exif-reader';
-// @flow
 
 type ResizeOptions = {
   image: Buffer,
   width: number,
   height: number,
-  quality?: number
+  quality?: number,
+  fit: 'inside' | 'outside' | 'cover',
+  sharpen?: {
+    sigma: number,
+    flat: number,
+    jagged: number
+  }
 };
 
 export default class ImageResizer {
@@ -20,13 +26,16 @@ export default class ImageResizer {
     image,
     width,
     height,
+    sharpen,
     quality = 90
   }: ResizeOptions) {
-    return sharp(image)
+    const sharpObject = sharp(image)
       .rotate(0)
-      .resize(width, height)
-      .withoutEnlargement()
-      .jpeg({ quality })
-      .toBuffer();
+      .resize({ width, height, withoutEnlargement: true })
+      .jpeg({ quality });
+    if (sharpen) {
+      sharpObject.sharpen(sharpen.sigma, sharpen.flat, sharpen.jagged);
+    }
+    return sharpObject.toBuffer();
   }
 }

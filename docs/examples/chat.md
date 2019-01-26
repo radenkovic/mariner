@@ -1,1 +1,0 @@
-# Mariner Realtime Chat Example
