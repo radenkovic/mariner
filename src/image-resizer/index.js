@@ -26,12 +26,13 @@ export default class ImageResizer {
     image,
     width,
     height,
+    fit,
     sharpen,
     quality = 90
   }: ResizeOptions) {
     const sharpObject = sharp(image)
       .rotate(0)
-      .resize({ width, height, withoutEnlargement: true })
+      .resize({ width, height, withoutEnlargement: true, fit })
       .jpeg({ quality });
     if (sharpen) {
       sharpObject.sharpen(sharpen.sigma, sharpen.flat, sharpen.jagged);
