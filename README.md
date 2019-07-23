@@ -17,5 +17,5 @@ yarn add node-mariner
 
 Documentation is on gitbook:
 
-[Documentation](http://marinerjs.com/)
+[Documentation](https://radenkovic.gitbook.io/mariner/)
 
